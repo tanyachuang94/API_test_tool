@@ -1,0 +1,81 @@
+html, body{
+	margin:0px;
+}
+body{
+	font-size:20px;
+	font-family: arial, "微軟正黑體", "新細明體", sans-serif;
+}
+form{
+	margin:0px;padding:0px;
+}
+a{
+	text-decoration:none;color:inherit;
+}
+input, img{
+	vertical-align:middle;
+}
+textarea{
+  overflow-y:scroll;
+}
+button{
+  height: 50px;
+  background-color: rgb(70, 112, 148);
+  border: solid lightgrey; border-radius:6px;
+  font-size: 16px; color: white;
+  padding: 10px 20px;
+  text-align: center;
+}
+.view{
+	height:82%; width:100%;max-width:1200px;margin:0px auto;
+}
+header{
+  display:flex; height:70px;
+  color:#ffffff; background-color:rgb(70, 112, 148);
+  font-size:0.7em; align-items:center;
+  flex-wrap: wrap; flex-direction: row;
+  justify-content: space-between; 
+}
+header>.logo{
+	flex:none;width:80px;margin-left:30px;
+}
+header>.logo img{
+	width:auto;height:48px;
+}
+header>.user{
+  flex:none;
+  margin-right:30px;
+  font-size:0.8em;
+}
+header>nav{
+  display: flex;width:80%;
+  flex-wrap: wrap;flex-direction: row;
+  justify-content: flex-start; 
+}
+header>nav>.item{
+  margin-right:30px;
+  font-size:1.5em;text-align:center;
+	cursor:pointer;
+}
+header>nav>.item:hover{
+	color:#aee4f5;
+}
+header>nav>.current{
+	color:#aee4f5;
+}
+main{
+  color:rgb(70, 112, 148)
+}
+footer{
+  bottom: 0; width: 100%;
+  color:#ffffff;background-color:rgb(70, 112, 148);
+  font-size:0.6em;padding:20px 0px;
+}
+footer>.item {
+  display: flex;
+  flex-wrap: wrap;flex-direction: row;
+  justify-content: center; 
+  }
+
+@media (max-width:800px){
+ 
+}
