@@ -17,13 +17,14 @@ input, img{
 textarea{
   overflow-y:scroll;
 }
-button{
+.button{
   height: 50px;
   background-color: rgb(70, 112, 148);
-  border: solid lightgrey; border-radius:6px;
+  border: 1.5px solid lightgrey; border-radius:6px;
   font-size: 16px; color: white;
   padding: 10px 20px;
   text-align: center;
+  cursor: pointer
 }
 .view{
 	height:82%; width:100%;max-width:1200px;margin:0px auto;
@@ -56,11 +57,8 @@ header>nav>.item{
   font-size:1.5em;text-align:center;
 	cursor:pointer;
 }
-header>nav>.item:hover{
-	color:#aee4f5;
-}
 header>nav>.current{
-	color:#aee4f5;
+	color:rgb(174, 209, 228);
 }
 main{
   color:rgb(70, 112, 148)

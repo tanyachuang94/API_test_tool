@@ -1,11 +1,11 @@
 @import "base.css";
-.method{
+.schemes{
     display: flex;
     flex-wrap: wrap;flex-direction: row;
     justify-content: center; 
     margin: 15px;
 }
-main>.view>form>.method>.item{
+main>.view>form>.schemes>.item{
    margin: 5px;
 }
 .url{
@@ -17,10 +17,16 @@ select{
     width:80px; height:30px;
 }
 main>.view>form>.tab, .content{
-    display: flex;
+    display: flex;margin:0px auto;
     flex-wrap: wrap;flex-direction: row;
     justify-content: center; 
-    align-items: flex-end
+    align-items: flex-end;
+}
+main>.view>form>.tab>.item{
+    text-align:center; width:90px;  
+}
+main>.view>form>.tab>.item:hover{
+    cursor: pointer;      
 }
 .text{
     width:500px; height:380px;
