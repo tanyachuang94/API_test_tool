@@ -15,23 +15,50 @@ headers.addEventListener('click', () => {
 body.addEventListener('click', () => {
   headersText.style.display = 'none';
   bodyText.style.display = 'block';
-  bodyText.style.backgroundColor= 'rgb(238,238,238)';
+  bodyText.style.backgroundColor= 'rgb(247, 247, 247)';
   headers.style.color = 'rgb(150, 178, 202)';
   body.style.color = 'rgb(70, 112, 148)';
 })
 
 function send() {
-  let protocol = document.getElementById("protocol").value
   let domain = document.getElementById("domain").value
   let endpoint = document.getElementById("endpoint").value
-  let method = document.getElementById("method").value
 
-  // let headers = document.getElementById("headersText").value
-  // let body = document.getElementById("bodyText").value
-  var data = {protocol:protocol, domain:domain, endpoint:endpoint,method:method}
+  if (domain.length == 0 || endpoint.length == 0){
+    window.alert("Please input Domain and Endpoint.");
+  }
+  else{
+    let protocol = document.getElementById("protocol").value
+    let method = document.getElementById("method").value
+    var data = {protocol:protocol, domain:domain, endpoint:endpoint,method:method}
+    console.log(document.getElementById("headersText").value)
+
+    if (document.getElementById("headersText").value.length > 0){
+      data.headers = document.getElementById("headersText").value
+    } if (document.getElementById("bodyText").value.length > 0){
+      data.body = document.getElementById("bodyText").value
+    } 
     fetch('/api/request',{
       body: JSON.stringify(data),
       headers: {'Content-Type':'application/json'},
       method: 'POST'
     })
+    .then((result)=> {
+      if (result != undefined){  // result is response status
+        function include(file) { 
+          var script  = document.createElement('script'); 
+          script.src  = file; 
+          script.type = 'text/javascript'; 
+          script.defer = true; 
+          document.getElementById('view1').appendChild(script); 
+        } 
+        include('js/response.js')
+      }
+      return result.json();
+    })
+    .then((json) =>{ //  Fix client err: Cannot set property 'innerHTML' of null
+      console.log(json)
+      document.getElementById('divResData').innerHTML = JSON.stringify(json)
+    })
   }
+}

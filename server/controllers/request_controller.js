@@ -1,28 +1,25 @@
 const fetch = require('node-fetch');
 
-const sendReq = (req, res) => {
+const sendReq = async (req, res) => {
   const url = req.body.protocol + '://' + req.body.domain + '/' +req.body.endpoint;
-  const method = req.body.method
-  // const headers = req.body.headers  
-  // const body = req.body.body
+  const data = {}
+  data.method = req.body.method
+  if (req.body.headers != undefined){
+    data.headers = JSON.parse(req.body.headers);
+  } if (req.body.body != undefined){
+    data.body = req.body.body;
+  } 
 
-  fetch( url ,{
-    // body: JSON.stringify(body),
-    // headers: {'Content-Type':'application/json'},
-    method: method,
-  })
-  .then((res) => {
-    return res.json()
-  })
-  .then((json) => {
-    // localStorage.resData = json
-    console.log(json);
-  })
-  .catch((err) => {
-    console.log('錯誤:', err);
-  })
-  res.redirect('http://localhost:7000/response.html'); //to be fixed
+  const result = await fetch(url, data)
+    .then((response) => {
+      return response.json()
+    })
+    .catch((err) => {
+      res.send(err)
+    })
+  res.json(result)
 }
+
 module.exports = {
   sendReq
 };

@@ -3,6 +3,7 @@
   <meta charset="utf-8">
   <title>API Test Tool</title>
   <link rel="stylesheet" href="css/request.css">
+  <!-- <script src='js/request.js'></script> -->
 </head>
 <body>
   <header>
@@ -18,39 +19,39 @@
   <div class="user" style="border: solid 1px white; padding: 6px 6px; border-radius:6px;" ><a href="./login">Login</a></div>
   </header>
   <main>
-    <div class="view">
-      <form>
-        <div class="schemes">
-          <div class="item">Protocol</br>
-            <select name="protocol" id="protocol">
-              <option value="https">HTTPS</option>
-              <option value="http">HTTP</option>
-            </select>
-          </div>
-          <div class="item">Domain</br>
-            <input class="url" type="text" name="domain" id="domain" placeholder="tanyachuang.site" />
-          </div>
-          <div class="item">Endpoint</br>
-            <input class="url" type="text" name="endpoint" id="endpoint" placeholder="product.html?id=1"/>
-          </div>
-          <div class="item">Method</br>
-            <select name="method" id="method">
-              <option value="GET">GET</option>
-              <option value="POST">POST</option>
-            </select>
-          </div>
+    <div class="view" id="view1">
+      <div class="schemes">
+        <div class="item">Protocol</br>
+          <select name="protocol" id="protocol">
+            <option value="https">HTTPS</option>
+            <option value="http">HTTP</option>
+          </select>
         </div>
-        <div class="tab" style="width:70%">
-          <div class="item" id="headers" style="color:rgb(70, 112, 148)">Headers</div>
-          <div class="item" id="body" style="color:rgb(150, 178, 202)">Body</div>
-        </div></br>
-        <div class="content" style="width:70%" >
-          <textarea class="text" name="headersText" id="headersText" style="display:block" placeholder="default value :&#13;&#10;'Content-Type':'application/json'"></textarea>
-          <textarea class="text" name="bodyText" id="bodyText" style="display:none;"></textarea>
-          <input class="button" type="submit" value="SEND" onclick="send()" />
+        <div class="item">Domain</br>
+          <input class="url" type="text" name="domain" id="domain" placeholder="tanyachuang.site" />
         </div>
-      </form>
-    </div>
+        <div class="item">Endpoint</br>
+          <input class="url" type="text" name="endpoint" id="endpoint" placeholder="product.html?id=1"/>
+        </div>
+        <div class="item">Method</br>
+          <select name="method" id="method">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+          </select>
+        </div>
+      </div>
+      <div class="tab">
+        <div class="item" id="headers" style="color:rgb(70, 112, 148)">Headers</div>
+        <div class="item" id="body" style="color:rgb(150, 178, 202)">Body</div>
+      </div></br>
+      <div class="content">
+        <input class="button" type="submit" value="CLEAR" onclick="location.href = '/request.html' "/>
+        <textarea class="text" name="headersText" id="headersText" style="display:block" placeholder='format :&#13;&#10;{"Content-Type":"application/json"}'></textarea>
+        <textarea class="text" name="bodyText" id="bodyText" style="display:none;"></textarea>
+        <input class="button" type="submit" value="SEND" onclick="send()" />
+      </div>
+    </div><br>
+    <hr id="line" style="display:none; border: 1px solid rgb(238,238,238)"></hr>
   </main>
 </body>
 <footer>
