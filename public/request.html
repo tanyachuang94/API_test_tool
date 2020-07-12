@@ -1,9 +1,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>API Test Tool</title>
+  <title>API Test Tool - Request</title>
   <link rel="stylesheet" href="css/request.css">
-  <!-- <script src='js/request.js'></script> -->
 </head>
 <body>
   <header>
@@ -21,6 +20,12 @@
   <main>
     <div class="view" id="view1">
       <div class="schemes">
+        <div class="item">Method</br>
+          <select name="method" id="method">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+          </select>
+        </div>
         <div class="item">Protocol</br>
           <select name="protocol" id="protocol">
             <option value="https">HTTPS</option>
@@ -32,12 +37,6 @@
         </div>
         <div class="item">Endpoint</br>
           <input class="url" type="text" name="endpoint" id="endpoint" placeholder="product.html?id=1"/>
-        </div>
-        <div class="item">Method</br>
-          <select name="method" id="method">
-            <option value="GET">GET</option>
-            <option value="POST">POST</option>
-          </select>
         </div>
       </div>
       <div class="tab">

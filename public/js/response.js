@@ -10,14 +10,22 @@ if(line.style.display == 'none'){
   
   const divRes = document.createElement('div')
   divRes.setAttribute('id','response');
+  divRes.setAttribute('style','font-size:20px');
   divRes.innerHTML = '<br>Response<br><br>'
   document.getElementById('view2').appendChild(divRes)
 
+  const divResStatus = document.createElement('div')
+  divResStatus.setAttribute('id','resStatus');
+  divRes.parentNode.insertBefore(divResStatus, divRes.nextSibling)
+  // const divResTime = document.createElement('div')
+  // divResTime.setAttribute('id','resTime');
+  // divResStatus.parentNode.insertBefore(divResTime, divResStatus.nextSibling)
+
   const divResData = document.createElement('div')
   divResData.setAttribute('class','content');
-  divResData.setAttribute('id','divResData');
+  divResData.setAttribute('id','resData');
   divResData.setAttribute('style','border:solid 1px grey; width:70%; height:300px; overflow:scroll; text-align: left');
-  divRes.parentNode.insertBefore(divResData, divRes.nextSibling)
+  divResStatus.parentNode.insertBefore(divResData, divResStatus.nextSibling)
   
 }
 else{

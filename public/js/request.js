@@ -22,17 +22,16 @@ body.addEventListener('click', () => {
 
 function send() {
   let domain = document.getElementById("domain").value
-  let endpoint = document.getElementById("endpoint").value
-
-  if (domain.length == 0 || endpoint.length == 0){
-    window.alert("Please input Domain and Endpoint.");
+  if (domain.length == 0){
+    window.alert("Please input Domain.");
   }
   else{
     let protocol = document.getElementById("protocol").value
     let method = document.getElementById("method").value
-    var data = {protocol:protocol, domain:domain, endpoint:endpoint,method:method}
-    console.log(document.getElementById("headersText").value)
+    var data = {protocol:protocol, domain:domain, method:method}
 
+    if (document.getElementById("endpoint").value.length > 0){
+      data.endpoint = document.getElementById("endpoint").value}
     if (document.getElementById("headersText").value.length > 0){
       data.headers = document.getElementById("headersText").value
     } if (document.getElementById("bodyText").value.length > 0){
@@ -58,7 +57,8 @@ function send() {
     })
     .then((json) =>{ //  Fix client err: Cannot set property 'innerHTML' of null
       console.log(json)
-      document.getElementById('divResData').innerHTML = JSON.stringify(json)
+      document.getElementById('resStatus').innerHTML = 'Code Status : ' + JSON.stringify(json.status) + '  Time : ' + JSON.stringify(json.time) + ' ms  Network : ' + navigator.connection.effectiveType + '<br><br>'
+      document.getElementById('resData').innerHTML = JSON.stringify(json.body)
     })
   }
 }
