@@ -2,13 +2,10 @@ const fetch = require('node-fetch');
 
 const sendReq = async (req, res) => {
   let endpoint = ''
-  console.log(endpoint)
   if (req.body.endpoint.length > 0){
     endpoint = req.body.endpoint
   }
-
   const url = req.body.protocol + '://' + req.body.domain + '/' + endpoint;
-
   const data = {}
   data.method = req.body.method
   if (req.body.headers != undefined){

@@ -37,6 +37,7 @@ function send() {
     } if (document.getElementById("bodyText").value.length > 0){
       data.body = document.getElementById("bodyText").value
     } 
+  
     fetch('/api/request',{
       body: JSON.stringify(data),
       headers: {'Content-Type':'application/json'},
@@ -56,9 +57,8 @@ function send() {
       return result.json();
     })
     .then((json) =>{ //  Fix client err: Cannot set property 'innerHTML' of null
-      console.log(json)
       document.getElementById('resStatus').innerHTML = 'Code Status : ' + JSON.stringify(json.status) + '  Time : ' + JSON.stringify(json.time) + ' ms  Network : ' + navigator.connection.effectiveType + '<br><br>'
-      document.getElementById('resData').innerHTML = JSON.stringify(json.body)
+      document.getElementById('act_data').innerHTML = JSON.stringify(json.body)
     })
   }
 }

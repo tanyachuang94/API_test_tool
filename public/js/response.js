@@ -23,7 +23,7 @@ if(line.style.display == 'none'){
 
   const divResData = document.createElement('div')
   divResData.setAttribute('class','content');
-  divResData.setAttribute('id','resData');
+  divResData.setAttribute('id','act_data');
   divResData.setAttribute('style','border:solid 1px grey; width:70%; height:300px; overflow:scroll; text-align: left');
   divResStatus.parentNode.insertBefore(divResData, divResStatus.nextSibling)
   

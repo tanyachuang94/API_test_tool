@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>API Test Tool - Spec</title>
+    <link rel="stylesheet" href="css/test.css">
+    <script src='js/testDetail.js'></script>
+  </head>
+  <body>
+    <header>
+      <div class="logo"><img src="imgs/logo_api.png" /></div>
+		<nav>
+			<div class="item"><a href="./request.html">Request</a></div>
+      <div class="item current"><a href="./test.html">Test</a></div>
+      <div class="item"><a href="./scripts.html">Scripts</a></div>
+      <div class="item"><a href="./reports.html">Reports</a></div>
+      <div class="item"><a href="./dashboard.html">Dashboard</a></div>
+		</nav>
+    <div class="user" style="border: solid 1px white; padding: 6px 6px; border-radius:6px;" ><a href="./login">Login</a></div>
+    </header>
+    <main>
+      <div class="view"><br>
+        <div class="content">Test Name : &nbsp;<br>
+          <div class="item" id="method"></div>
+          <div class="item" id="res_check"></div>
+          <div class="item" id="spec_name"></div>
+        </div><br>
+        <div class="content">
+          <div class="title">Request Header</div>
+          <div class="title">Request Body</div>
+        </div><br>
+        <div class="content">
+          <textarea class="area" id="req_header"></textarea>
+          <textarea class="area" id="req_body"></textarea>
+        </div><br>
+        <div class="content">
+          <div class="title">Expected Response</div>
+          <div class="title">Actual Response</div>
+        </div><br>
+        <div class="content">
+          <textarea class="area" id="res_data"></textarea>
+          <div class="area" id="act_data"></div>
+        </div>
+        <div class="content">
+          <input class="button" type="submit" value="SAVE" onclick="saveTest()" />
+          <input class="button" type="submit" value="SEND" onclick="sendTest()" />
+        </div>
+      </div>
+    </main>
+  </body>
+  <footer>
+    <div class="item">
+      &copy; 2020. All rights reserved.
+    </div>
+  </footer>
+</html>

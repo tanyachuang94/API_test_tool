@@ -48,7 +48,36 @@ app.get('/api/load', async (req, res) => {
     res.send(data)
     })  
 })
+app.post('/api/readapi', async (req, res) => {
+  const protocol = req.body.protocol
+  const domain = req.body.domain
+  const endpoint = req.body.endpoint
+  function apiId(){
+    return new Promise(resolve => {
+      db.query(`SELECT id FROM api WHERE protocol = ? AND domain = ? AND endpoint = ?`,[protocol,domain,endpoint], (err, result) => {
+        if (err) throw err;
+      resolve(result);
+      }); 
+    }); 
+  }
+  async function getSpec() {
+    const id = await apiId();
+    return new Promise(resolve => {
+      db.query(`SELECT id,spec_name,method,res_check FROM spec WHERE api_id = ?`,[id[0].id], (err, result) => {
+        if (err) throw err;
+      resolve(result);
+      }); 
+    }); 
+   
+  }
+  getSpec().then(result=>{
+    res.send(JSON.stringify(result))
+  })
+  
 
+  
+ 
+})
 // Error handling
 app.use(function (err, req, res, next) {
   console.log(err);
