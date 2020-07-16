@@ -1,13 +1,15 @@
 const router = require('express').Router();
-const {wrapAsync} = require('../../util');
+const { wrapAsync } = require('../../util');
 
-const {getTest} = require('../controllers/test_controller');
-const {runTest} = require('../controllers/test_controller');
+const { getTest, testDetail, compare } = require('../controllers/test_controller');
 
 router.route('/spec_test')
-    .get(wrapAsync(getTest));
+  .get(wrapAsync(getTest));
 
-router.route('/runtest')
-    .get(wrapAsync(runTest));
+router.route('/test_detail')
+  .get(wrapAsync(testDetail));
+
+router.route('/compare')
+  .post(wrapAsync(compare));
 
 module.exports = router;

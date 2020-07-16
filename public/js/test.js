@@ -21,6 +21,10 @@ function load(){
 load()
 
 async function readApi(){
+  const parent = document.getElementById("specList");
+  while (parent.firstChild) {
+    parent.firstChild.remove();
+  }
   // fix : clear spec list before readapi
   fetch('/api/readapi',{
     body: JSON.stringify({
@@ -40,11 +44,11 @@ async function readApi(){
       divApi.setAttribute('class','item');
       divApi.setAttribute('id','api'+json[i].id);
       document.getElementById('specList').appendChild(divApi)
-      const aApi = document.createElement('a')
-      aApi.setAttribute('href','./test_detail.html?id='+json[i].id);
-      document.getElementById('api'+json[i].id).appendChild(aApi)
+      const aSpec = document.createElement('a')
+      aSpec.setAttribute('href','./test_detail.html?id='+json[i].id);
+      document.getElementById('api'+json[i].id).appendChild(aSpec)
       // divApi.parentNode.insertBefore(aApi, divApi.nextSibling)
-      aApi.innerHTML = json[i].method +' &nbsp;&nbsp;'+ json[i].res_check +' &nbsp;&nbsp;'+ json[i].spec_name
+      aSpec.innerHTML = json[i].spec_name
     }
   })
 

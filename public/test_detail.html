@@ -11,35 +11,58 @@
 		<nav>
 			<div class="item"><a href="./request.html">Request</a></div>
       <div class="item current"><a href="./test.html">Test</a></div>
-      <div class="item"><a href="./scripts.html">Scripts</a></div>
-      <div class="item"><a href="./reports.html">Reports</a></div>
+      <div class="item"><a href="./script.html">Script</a></div>
+      <div class="item"><a href="./report.html">Report</a></div>
       <div class="item"><a href="./dashboard.html">Dashboard</a></div>
 		</nav>
     <div class="user" style="border: solid 1px white; padding: 6px 6px; border-radius:6px;" ><a href="./login">Login</a></div>
     </header>
     <main>
       <div class="view"><br>
-        <div class="content">Test Name : &nbsp;<br>
-          <div class="item" id="method"></div>
-          <div class="item" id="res_check"></div>
-          <div class="item" id="spec_name"></div>
+        <div class="content" style="width:70%; padding: 4px; border: 2px dashed; border-radius: 5px;">
+        <div class="item">Test Case <br>
+          <input id="spec_name" style="width:250px"></input>
+        </div>
+        <div class="item">Method <br>
+          <select id="method">
+            <option value="GET" id="GET">GET</option>
+            <option value="POST" id="POST">POST</option>
+          </select>
+        </div>
+        <div class="item">Check <br>
+          <select id="res_check">
+            <option value="DATA" id="DATA">DATA</option>
+            <option value="TYPE" id="TYPE">TYPE</option>
+          </select>
+        </div>
+        <div class="item">Code status <br>
+          <input id="code" style="width:80px"></input>
+        </div>
+        <div class="item">Response Time(ms) <br>
+          <input id="time" style="width:80px"></input>
+        </div>
+        </div><br>
+        <div class="content">
+          <div id="resStatus"></div>
         </div><br>
         <div class="content">
           <div class="title">Request Header</div>
           <div class="title">Request Body</div>
         </div><br>
         <div class="content">
-          <textarea class="area" id="req_header"></textarea>
-          <textarea class="area" id="req_body"></textarea>
+          <textarea class="area" id="req_header" style="height: 100px"></textarea>
+          <textarea class="area" id="req_body" style="height: 100px"></textarea>
         </div><br>
         <div class="content">
           <div class="title">Expected Response</div>
-          <div class="title">Actual Response</div>
+          <div class="title" id="actual">Actual Response</div>   
+          <!-- Fix display format -->
         </div><br>
         <div class="content">
-          <textarea class="area" id="res_data"></textarea>
-          <div class="area" id="act_data"></div>
-        </div>
+          <textarea class="area" id="res_data" style="height: 250px"></textarea>
+          <div class="area" id="act_data" style="height: 250px; font-family:monospace;"></div>
+        </div><br>
+        
         <div class="content">
           <input class="button" type="submit" value="SAVE" onclick="saveTest()" />
           <input class="button" type="submit" value="SEND" onclick="sendTest()" />

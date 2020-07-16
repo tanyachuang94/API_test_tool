@@ -5,7 +5,8 @@ if(line.style.display == 'none'){
   const divView2 = document.createElement('div')
   divView2.setAttribute('id','view2');
   divView2.setAttribute('class','view');
-  divView2.setAttribute('style','text-align:center');
+  divView2.setAttribute('style','text-align:center;');
+ 
   line.parentNode.insertBefore(divView2, line.nextSibling)
   
   const divRes = document.createElement('div')

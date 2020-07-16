@@ -57,7 +57,7 @@ function send() {
       return result.json();
     })
     .then((json) =>{ //  Fix client err: Cannot set property 'innerHTML' of null
-      document.getElementById('resStatus').innerHTML = 'Code Status : ' + JSON.stringify(json.status) + '  Time : ' + JSON.stringify(json.time) + ' ms  Network : ' + navigator.connection.effectiveType + '<br><br>'
+      document.getElementById('resStatus').innerHTML = '  Code Status : ' + JSON.stringify(json.status) + ' / Time : ' + JSON.stringify(json.time) + ' ms / Network : ' + navigator.connection.effectiveType + '<br><br>'
       document.getElementById('act_data').innerHTML = JSON.stringify(json.body)
     })
   }
