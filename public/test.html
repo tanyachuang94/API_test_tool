@@ -14,7 +14,7 @@
     <div class="item" id="repPage"><a href="./report.html">Report</a></div>
     <div class="item" id="dashPage"><a href="./dashboard.html">Dashboard</a></div>
   </nav>
-  <div class="user" style="border: solid 1px white; padding: 6px 6px; border-radius:6px;" ><a href="./login">Login</a></div>
+  <div class="user" style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px; color:#494949" ><a href="./login">Login</a></div>
   </header>
   <main>
     <div class="view"><br>
@@ -31,8 +31,11 @@
         <div class="item">Endpoint</br>
           <input name="add_endpoint" id="add_endpoint"></input>
         </div>
+        <div class="item">Test Case Name</br>
+          <input name="add_test" id="add_test"></input>
+        </div>
         <div style="text-align:center">
-          <input class="button" type="submit" value="CREATE" onclick="createApi()" />
+          <input class="button" type="submit" value="CREATE" onclick="addSpec()" />
         </div>
       </div></br>
     </div></br>

@@ -6,24 +6,25 @@ const sendReq = async (req, res) => {
     endpoint = req.body.endpoint
   }
   const url = req.body.protocol + '://' + req.body.domain + '/' + endpoint;
-  const data = {}
-  data.method = req.body.method
-  if (req.body.headers != undefined){
-    data.headers = JSON.parse(req.body.headers);
-  } if (req.body.body != undefined){
+  const data = {};
+  data.method = req.body.method;
+  if (req.body.headers != null || req.body.headers != undefined) {
+    data.headers = JSON.parse(req.body.headers);  // Fix to check when json parse fail
+  }
+  if (req.body.body != null || req.body.body != undefined) {
     data.body = req.body.body;
-  } 
+  }
   const detail = {}
-  const start = new Date();
+  const start = Date.now();
   const result = await fetch(url, data)
     .then((response) => {
-      const end = new Date() - start
+      const end = Date.now() - start
       detail.time = end
       detail.status = response.status
       return response.json()
     })
     .catch((err) => {
-      const end = new Date() - start
+      const end = Date.now() - start
       detail.time = end
       detail.body = err
       console.log(err)

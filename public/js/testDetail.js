@@ -1,6 +1,6 @@
 const getURL = location.href;  // 用location.href取得網址，並存入變數
 const url = new URL(getURL)  // 將網址 (字串轉成URL)
-const getID = url.searchParams.get('id') //回傳url的id參數
+const getID = url.searchParams.get('id') //回傳url的id參數 (testId)
 let expected = '';
 // const actual = '';
 let specCheck = '';
@@ -22,18 +22,20 @@ fetch('/api/spec_test?id=' + getID)  // display spec in test detail page
     specCheck = json.res_check;
     specTime = json.res_time;
     specCode = json.res_code;
+  })
+  .catch((err) => {
+    console.log(err);
   });
 
 async function sendTest() {
   const data = {};
-  // let code = 0;
-  // let time = 0;
+  let apiId = 0;
+  const network = navigator.connection.effectiveType;
 
   const testDetail = await fetch('/api/test_detail?id=' + getID)  // 同時拿api url和spec test
     .then(res => res.json())
     .then(json => {
-      // code = json[0].res_code;
-      // time = json[0].res_time;
+      apiId = json[0].api_id;
       data.protocol = json[0].protocol;
       data.domain = json[0].domain;
       data.endpoint = json[0].endpoint;
@@ -45,6 +47,7 @@ async function sendTest() {
     .catch((err) => {
       console.log(err);
     });
+
   const resultDetail = await fetch('/api/request', {
     body: JSON.stringify(testDetail),
     headers: { 'Content-Type': 'application/json' },
@@ -60,13 +63,16 @@ async function sendTest() {
     .catch((err) => {
       console.log(err);
     });
+
   const compare = {
-    id: getID,
+    specId: getID,
+    apiId: apiId,
     specCheck: specCheck,
     spec_res: expected,
     specCode: specCode,
     specTime: specTime,
     response: resultDetail,
+    network: network,
   };
 
   fetch('/api/compare', {
@@ -77,14 +83,39 @@ async function sendTest() {
     .then((result) => {
       return result.json();
     })
-    .then((json) => { 
+    .then((json) => {
       if (json.data == 'fail') {
         document.getElementById('actual').setAttribute('style', 'color:red');
       }
-      document.getElementById('resStatus').innerHTML = 'Test Result : '+ json.result +' / Code Status : '+json.code+' / Time : '+json.time + ' (ms)'
+      document.getElementById('resStatus').innerHTML = 'Test Result : '+ json.result +' / Code Status : '+json.code+' / Time : '+json.time + ' (ms)'+' / Network : '+network 
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
 
 async function saveTest() {
-
+  const testSpec = {
+    spec_name: document.getElementById('spec_name').value,
+    method: document.getElementById('method').value,
+    res_check: document.getElementById('res_check').value,
+    res_code: document.getElementById('code').value,
+    res_time: document.getElementById('time').value,
+    req_header: document.getElementById('req_header').value,
+    req_body: document.getElementById('req_body').value,
+    res_data: document.getElementById('res_data').value,
+  };
+  fetch('/api/test_detail?id=' + getID, {
+    body: JSON.stringify(testSpec),
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+  })
+    .then(result =>　result.json())
+    .then((json) => {  // save 後要reload page
+      if (json.result == 'save') {
+        window.location = 'test_detail.html?id=' + getID
+      } else {
+        alert(json.result);
+      }
+    });
 }

@@ -45,22 +45,22 @@ app.get('/api/load', async (req, res) => {
     res.send(data);
   });
 });
+function apiId(protocol, domain, endpoint) {
+  return new Promise(resolve => {
+    db.query('SELECT id FROM api WHERE protocol = ? AND domain = ? AND endpoint = ?', [protocol, domain, endpoint], (err, result) => {
+      if (err) throw err;
+      resolve(result[0]);
+    });
+  });
+}
 app.post('/api/readapi', async (req, res) => { // Fix : sort api , cannot find the spec
   const protocol = req.body.protocol;
   const domain = req.body.domain;
   const endpoint = req.body.endpoint;
-  function apiId() {
-    return new Promise(resolve => {
-      db.query('SELECT id FROM api WHERE protocol = ? AND domain = ? AND endpoint = ?', [protocol, domain, endpoint], (err, result) => {
-        if (err) throw err;
-        resolve(result);
-      });
-    });
-  }
   async function getSpec() {
-    const id = await apiId();
+    const id = await apiId(protocol, domain, endpoint);
     return new Promise(resolve => {
-      db.query('SELECT id,spec_name,method,res_check FROM spec WHERE api_id = ?', [id[0].id], (err, result) => {
+      db.query('SELECT id,spec_name FROM spec WHERE api_id = ?', [id.id], (err, result) => {
         if (err) throw err;
         resolve(result);
       });
@@ -68,6 +68,38 @@ app.post('/api/readapi', async (req, res) => { // Fix : sort api , cannot find t
   }
   getSpec().then(result => {
     res.send(JSON.stringify(result));
+  });
+});
+app.post('/api/addspec', async (req, res) => {
+  const protocol = req.body.protocol;
+  const domain = req.body.domain;
+  const endpoint = req.body.endpoint;
+  const specName = req.body.test;
+  let api = '';
+  async function addApi() {
+    const id = await apiId(protocol, domain, endpoint);
+    if (id != undefined) {  // if no api found then create new
+      api = id.id;
+      return api;
+    } else {
+      try {
+        return new Promise(resolve => {
+          db.query('INSERT INTO api (protocol,domain,endpoint) VALUES (?,?,?) ', [protocol, domain, endpoint], (err, result) => {
+            if (err) throw err;
+            resolve(api = result.insertId);
+          });
+        });
+      } catch (error) {
+        return error;
+      }
+    }
+  }
+  addApi().then(async (api) => {
+    await db.query('INSERT INTO spec (spec_name,api_id,method,res_check) VALUES (?,?,?,?)', [specName, api, 'GET', 'DATA'], (err, spec) => {
+      if (err) throw err;
+      const specId = spec.insertId;
+      res.send(JSON.stringify(specId));
+    });
   });
 });
 // Error handling
