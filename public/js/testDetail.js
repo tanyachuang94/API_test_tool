@@ -15,7 +15,7 @@ fetch('/api/spec_test?id=' + getID)  // display spec in test detail page
     document.getElementById('spec_name').value = json.spec_name;
     document.getElementById('req_header').value = json.req_header;
     document.getElementById('req_body').value = json.req_body;
-    document.getElementById('res_data').innerHTML = json.res_data;
+    document.getElementById('res_data').innerHTML = JSON.stringify(JSON.parse(json.res_data), null, 2);
     document.getElementById('code').value = json.res_code;
     document.getElementById('time').value = json.res_time;
     expected = json.res_data;
@@ -57,7 +57,7 @@ async function sendTest() {
       return result.json();
     })
     .then((json) => { //  Fix client err: Cannot set property 'innerHTML' of null
-      document.getElementById('act_data').innerHTML = JSON.stringify(json.body);
+      document.getElementById('act_data').innerHTML = JSON.stringify(json.body, null, 2);
       return json;
     })
     .catch((err) => {
