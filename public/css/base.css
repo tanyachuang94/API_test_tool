@@ -19,7 +19,7 @@ textarea{
 }
 .button{
   height: 50px;
-  background-color: rgb(143, 197, 185);
+  background-color: #8FC5B9;
   border: 1.5px solid lightgrey; border-radius:8px;
   font-size: 16px; color: white;
   padding: 10px 20px;
@@ -31,7 +31,7 @@ textarea{
 }
 header{
   display:flex; height:67px;
-  color:#ffffff; background-color:rgb(143, 197, 185);
+  color:#ffffff; background-color:#8FC5B9 ;
   font-size:0.8em; align-items:center;
   flex-wrap: wrap; flex-direction: row;
   justify-content: space-evenly; 
@@ -64,7 +64,7 @@ main{
 /* Fix footer align */
 footer{
   width: 100%;height: 20px;margin-top: -30px; /* negative value of footer height */
-  color:#ffffff;background-color:rgb(143, 197, 185);
+  color:#ffffff;background-color:#8FC5B9;
   font-size:0.6em;padding:20px 0px;
   position: relative;
 }

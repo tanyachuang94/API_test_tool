@@ -8,15 +8,15 @@ document.getElementById('reqPage').classList.add("current");
 headers.addEventListener('click', () => {
   bodyText.style.display = 'none';
   headersText.style.display = 'block';
-  body.style.color = 'rgb(143, 197, 185)';
+  body.style.color = '#8FC5B9';
   headers.style.color = '#494949';
 });
 
 body.addEventListener('click', () => {
   headersText.style.display = 'none';
   bodyText.style.display = 'block';
-  bodyText.style.backgroundColor= 'rgb(247, 247, 247)';
-  headers.style.color = 'rgb(143, 197, 185)';
+  bodyText.style.backgroundColor= '#F7F7F7';
+  headers.style.color = '#8FC5B9';
   body.style.color = '#494949';
 });
 
