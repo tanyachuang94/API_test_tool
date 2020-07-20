@@ -14,7 +14,7 @@ app.use('/api/',
   [
     require('./server/routes/request_route'),
     require('./server/routes/test_route'),
-    // require('./server/controllers/admin_route'),
+    require('./server/routes/report_route'),
   ]);
 
 app.get('/api/load', async (req, res) => {

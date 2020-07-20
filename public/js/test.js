@@ -58,10 +58,10 @@ async function readApi() {
 async function addSpec() {
   let domain = document.getElementById('add_domain').value;
   let test = document.getElementById('add_test').value;
-  if (domain.length == 0 ) {
+  if (domain.length == 0) {
     window.alert("Please input Domain.");
   }
-  if (test.length == 0 ) {
+  if (test.length == 0) {
     window.alert("Please input Test Case Name.");
   } else {
     fetch('/api/addspec', {
@@ -69,7 +69,7 @@ async function addSpec() {
         protocol: document.getElementById('add_protocol').value,
         domain: domain,
         endpoint: document.getElementById('add_endpoint').value,
-        test: document.getElementById('add_test').value,
+        test: test,
       }),
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
@@ -78,8 +78,7 @@ async function addSpec() {
         return result.json();
       })
       .then((json) => {
-        console.log(json)
-        window.location='./test_detail.html?id='+json
+        window.location = './test_detail.html?id=' + json
       });
   }
 }

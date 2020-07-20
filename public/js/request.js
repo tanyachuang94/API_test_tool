@@ -10,7 +10,7 @@ headers.addEventListener('click', () => {
   headersText.style.display = 'block';
   body.style.color = 'rgb(143, 197, 185)';
   headers.style.color = '#494949';
-})
+});
 
 body.addEventListener('click', () => {
   headersText.style.display = 'none';
@@ -18,7 +18,7 @@ body.addEventListener('click', () => {
   bodyText.style.backgroundColor= 'rgb(247, 247, 247)';
   headers.style.color = 'rgb(143, 197, 185)';
   body.style.color = '#494949';
-})
+});
 
 function send() {
   let domain = document.getElementById("domain").value
