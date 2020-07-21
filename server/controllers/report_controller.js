@@ -1,4 +1,4 @@
-const moment = require('moment');
+var moment = require('moment-timezone');
 const Report = require('../models/report_model');
 
 moment().format();
@@ -8,7 +8,7 @@ const getReport = async (req, res) => {
   const reports = await Report.reportList(sort);
   for (let i = 0; i < reports.length; i += 1) {
     let time = Number(reports[i].test_time);
-    reports[i].test_time = moment(time).format('lll');
+    reports[i].test_time = moment(time).tz("Asia/Taipei").format('lll');
   }
   res.send(reports);
 };
