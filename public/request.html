@@ -2,19 +2,25 @@
 <head>
   <meta charset="utf-8">
   <title>API Test Tool - Request</title>
-  <link rel="stylesheet" href="css/request.css">
+  <link rel=icon href="./imgs/favicon.ico" sizes="16x16" type="image/png">
+  <link rel="stylesheet" href="./css/request.css">
+  <link rel="stylesheet" href="./css/user.css">
 </head>
 <body>
   <header>
-    <div class="logo"><img src="imgs/logo_api.png" /></div>
+    <div class="logo"><img src="./imgs/logo_api.png" /></div>
   <nav>
     <div class="item" id="reqPage"><a href="./request.html">Request</a></div>
-    <div class="item" id="testPage"><a href="./test.html">Test</a></div>
-    <div class="item" id="scrPage"><a href="./script.html">Script</a></div>
-    <div class="item" id="repPage"><a href="./report.html">Report</a></div>
-    <div class="item" id="dashPage"><a href="./dashboard.html">Dashboard</a></div>
+    <div class="item" id="testPage" style="display:none"><a href="./test.html">Test</a></div>
+    <div class="item" id="scrPage" style="display:none"><a href="./script.html">Script</a></div>
+    <div class="item" id="repPage" style="display:none"><a href="./report.html">Report</a></div>
+    <div class="item" id="dashPage" style="display:none"><a href="./dashboard.html">Dashboard</a></div>
   </nav>
-  <div class="user" style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px; color:#494949" ><a href="./login">Login</a></div>
+  <div class="user">
+    <div id="userIcon" style="display:none"></div>
+    <div id="user" style="display:none"></div>
+    <button id="myBtn" style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px">Login</button>
+  </div>
   </header>
   <main>
     <div class="view" id="view1">
@@ -51,6 +57,25 @@
     </div><br>
     <hr id="line" style="display:none; border: 1px solid rgb(238,238,238)"></hr>
   </main>
+  <div id="myModal_2" class="modal_2">
+		<div class="modal-content_2">
+      <div class="container">
+        <div class="nav signup" id="nav_signup">Sign Up</div>
+        <div class="nav login" id="nav_login">Log In</div>
+        <div class="form signup-form" id="signup_form">
+          <input id="signup_name" class="input" type="text" name="name" placeholder="Your Name"><br>
+          <input id="signup_email"class="input" type="email" name="email" placeholder="Your Email Address"><br>
+          <input id="signup_password"class="input" type="password" name="password" placeholder="Choose a Password"><br>
+          <button class="btn" id="signupBtn">Create account</button>
+        </div>
+        <div class="form login-form" id="login_form">
+          <input id="login_email" class="input" type="email" name="email" placeholder="Email"><br>
+          <input id="login_password" class="input" type="password" name="password" placeholder="Password"><br>
+          <button class="btn" id="loginBtn">log in</button>
+        </div>
+      </div>
+    </div>
+	</div>
 </body>
 <!-- <footer>
   <div class="item">
@@ -58,4 +83,5 @@
   </div>
 </footer> -->
 <script src='js/request.js'></script>
+<script src='js/user.js'></script>
 </html>

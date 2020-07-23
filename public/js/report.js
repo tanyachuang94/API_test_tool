@@ -2,7 +2,6 @@ let sort = document.getElementById('sort').value;
 const data = document.getElementById('data');
 
 function load() {
-  console.log(sort)
   fetch('/api/report?sort=' + sort)
     .then(res =>　res.json())
     .then(json => {

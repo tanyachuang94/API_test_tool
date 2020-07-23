@@ -111,7 +111,7 @@ async function saveTest() {
     method: 'POST',
   })
     .then(result =>　result.json())
-    .then((json) => {  // save 後要reload page
+    .then((json) => {  // reload page after saving
       if (json.result == 'save') {
         window.location = 'test_detail.html?id=' + getID
       } else {

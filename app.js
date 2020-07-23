@@ -1,7 +1,14 @@
 require('dotenv').config();
+var nodemailer = require('nodemailer');
+
 const express = require('express');
 const bodyparser = require('body-parser');
 const db = require('./mysqlcon.js');
+const crypto = require('crypto');
+const hash = crypto.createHash('sha256');
+const router = express.Router();
+const cookieParser = require('cookie-parser');
+router.use(cookieParser());
 
 const app = express();
 const port = process.env.PORT;
@@ -101,6 +108,115 @@ app.post('/api/addspec', async (req, res) => {
       res.send(JSON.stringify(specId));
     });
   });
+});
+
+function hashData (data) { //加密
+  const hash = crypto.createHash('sha256');
+  hash.update(data);
+  hashResult = hash.digest('hex');
+  return (hashResult);
+}
+
+function findEmail(email){
+  return new Promise(resolve => {
+  db.query('SELECT * FROM user WHERE email = ?', [email], (err,result) => {
+    if (err) throw err
+    resolve(result)
+  })
+  })
+}
+function sendEmail(email, hashToken) {
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    secureConnection: false, // SSL方式,防止竊取訊息
+    auth: {
+      user: process.env.EMAIL_ACCOUNT,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+  let mailOptions = {
+    from: 'API Test Tool',
+    to: email,
+    subject: 'Thanks for your registration.',
+    text: 'Please activate your account to login by clicking http://localhost:7000/api/verify?token='+hashToken ,
+  };
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
+
+app.post('/api/signup', async (req, res) => {
+  const name = req.body.name
+  const email = req.body.email
+  const password = req.body.password
+  let expired = 3600;    // Fix compare token
+  try {
+    let result = await findEmail(email);
+    if (result.length !== 0) {    // Resend verify email
+      res.status(403).send({ error: 'Email Already Exists. ' });
+    } else {
+      let token = email + Date();
+      let hashToken = hashData (token);
+      let hashPW = hashData (password);
+      let post = {
+        email: email, password: hashPW, name: name, token: hashToken, status: 0,
+      };
+      db.query('INSERT INTO user SET ?', post, (err, result) => {
+        if (err) throw err;
+        // id = result.insertId;
+        // res.send({
+        //   id: result.insertId,
+        //   name: name,
+        //   token: hashToken,
+        // });
+      });
+      sendEmail(email, hashToken);
+    }
+  } catch (error) {
+    return error;
+  }
+});
+
+app.get('/api/verify', async (req, res) => {
+  const signupToken = req.query.token;
+  db.query('UPDATE user SET status = 1 WHERE token = ?', signupToken, (err, result) => {
+    if (err) throw err;
+    res.redirect('../request.html');
+  });
+});
+
+app.post('/api/login', async (req, res) => {
+  const email = req.body.email
+  const password = req.body.password
+  try {
+    let result = await findEmail(email);
+    const status = result[0].status
+    let token = email + Date();
+    let hashToken = await hashData (token);    // Fix check token valid and update token in db
+    let hashPW = await hashData (password);
+    if (result.length == 0) {
+      res.status(400).send({ error: 'Email does not exist.' });
+    } else if (status != 1) {
+      res.status(400).send({ error: 'Account is inactive.' });
+    } else if (hashPW != result[0].password) {
+      res.status(400).send({ error: 'Incorrect password.' });
+    } else {
+      res.send({
+        id: result[0].id,
+        name: result[0].name,
+        token: hashToken,
+      });
+    }
+  } catch (error) {
+    return error;
+  }
 });
 // Error handling
 app.use(function (err, req, res, next) {
