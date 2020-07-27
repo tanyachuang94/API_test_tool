@@ -82,12 +82,14 @@ async function trigger(timer) {
   }
 }
 
-const job = new CronJob('50 40 22 * * *', async () => {
-  trigger('01');
+const job = new CronJob('00 00 23 * * *', async () => {
+  trigger('01'),
+  timeZone: 'Asia/Taipei'
 });
 job.start();
 const job2 = new CronJob('00 00 15 * * *', async () => {
-  trigger('13');
+  trigger('13'),
+  timeZone: 'Asia/Taipei'
 });
 job2.start();
 
