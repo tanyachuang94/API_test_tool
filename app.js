@@ -47,7 +47,7 @@ async function trigger(timer) {
     const req = {};
     req.body = {};
     const data = {};
-    const testDetail = await fetch(`https://api_test.tanyachuang.site/api/test_detail?id=${spec[i].spec_id}`) // 同時拿api url和spec test
+    const testDetail = await fetch(`http://localhost:7000/api/test_detail?id=${spec[i].spec_id}`) // 同時拿api url和spec test
       .then((res) => res.json())
       .then((json) => {
         data.protocol = json[0].protocol;
@@ -209,7 +209,7 @@ function sendEmail(email, hashToken) {
     from: 'API Test Tool',
     to: email,
     subject: 'Thanks for your registration.',
-    text: `Please activate your account to login by clicking http://localhost:7000/api/verify?token=${hashToken}`,
+    text: `Please activate your account to login by clicking https://api_test.tanyachuang.site/api/verify?token=${hashToken}`,
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
