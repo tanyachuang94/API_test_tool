@@ -1,15 +1,15 @@
-const getURL = location.href;  // 用location.href取得網址，並存入變數
-const url = new URL(getURL)  // 將網址 (字串轉成URL)
-const getID = url.searchParams.get('id') //回傳url的id參數 (testId)
+const getURL = location.href; // 用location.href取得網址，並存入變數
+const url = new URL(getURL); // 將網址 (字串轉成URL)
+const getID = url.searchParams.get('id'); // 回傳url的id參數 (testId)
 let expected = '';
 // const actual = '';
 let specCheck = '';
 let specTime = 0;
 let specCode = 0;
 
-fetch('/api/spec_test?id=' + getID)  // display spec in test detail page
-  .then(res => res.json())
-  .then(json => {
+fetch(`/api/spec_test?id=${getID}`) // display spec in test detail page
+  .then((res) => res.json())
+  .then((json) => {
     document.getElementById(json.method).selected = true;
     document.getElementById(json.res_check).selected = true;
     document.getElementById('spec_name').value = json.spec_name;
@@ -32,9 +32,9 @@ async function sendTest() {
   let apiId = 0;
   const network = navigator.connection.effectiveType;
 
-  const testDetail = await fetch('/api/test_detail?id=' + getID)  // 同時拿api url和spec test
-    .then(res => res.json())
-    .then(json => {
+  const testDetail = await fetch(`/api/test_detail?id=${getID}`) // 同時拿api url和spec test
+    .then((res) => res.json())
+    .then((json) => {
       apiId = json[0].api_id;
       data.protocol = json[0].protocol;
       data.domain = json[0].domain;
@@ -53,10 +53,8 @@ async function sendTest() {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
   })
-    .then((result) => {
-      return result.json();
-    })
-    .then((json) => { //  Fix client err: Cannot set property 'innerHTML' of null
+    .then((result) => result.json())
+    .then((json) => {
       document.getElementById('act_data').innerHTML = JSON.stringify(json.body, null, 2);
       return json;
     })
@@ -66,13 +64,13 @@ async function sendTest() {
 
   const compare = {
     specId: getID,
-    apiId: apiId,
-    specCheck: specCheck,
+    apiId,
+    specCheck,
     spec_res: expected,
-    specCode: specCode,
-    specTime: specTime,
+    specCode,
+    specTime,
     response: resultDetail,
-    network: network,
+    network,
   };
 
   fetch('/api/compare', {
@@ -80,14 +78,12 @@ async function sendTest() {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
   })
-    .then((result) => {
-      return result.json();
-    })
+    .then((result) => result.json())
     .then((json) => {
       if (json.data == 'fail') {
         document.getElementById('actual').setAttribute('style', 'color:red');
       }
-      document.getElementById('resStatus').innerHTML = 'Test Result : '+ json.result +' / Code Status : '+json.code+' / Time : '+json.time + ' (ms)'+' / Network : '+network 
+      document.getElementById('resStatus').innerHTML = `Test Result : ${json.result} / Code Status : ${json.code} / Time : ${json.time} (ms)` + ` / Network : ${network}`;
     })
     .catch((err) => {
       console.log(err);
@@ -105,15 +101,15 @@ async function saveTest() {
     req_body: document.getElementById('req_body').value,
     res_data: document.getElementById('res_data').value,
   };
-  fetch('/api/test_detail?id=' + getID, {
+  fetch(`/api/test_detail?id=${getID}`, {
     body: JSON.stringify(testSpec),
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
   })
-    .then(result =>　result.json())
-    .then((json) => {  // reload page after saving
+    .then((result) =>　result.json())
+    .then((json) => { // reload page after saving
       if (json.result == 'save') {
-        window.location = 'test_detail.html?id=' + getID
+        window.location = `test_detail.html?id=${getID}`;
       } else {
         alert(json.result);
       }
