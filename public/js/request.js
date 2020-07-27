@@ -75,7 +75,7 @@ function send() {
           const divResData = document.createElement('pre');
           divResData.setAttribute('class', 'content');
           divResData.setAttribute('id', 'act_data');
-          divResData.setAttribute('style', 'border:solid 1px grey; width:70%; height:300px; overflow:scroll; text-align: left;border-radius: 5px');
+          divResData.setAttribute('style', 'border:solid 1px grey; width:70%; height:300px; overflow-y:scroll; white-space: pre-wrap; text-align: left;border-radius: 5px');
           divResStatus.parentNode.insertBefore(divResData, divResStatus.nextSibling);
         }
         return result.json();

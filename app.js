@@ -80,7 +80,7 @@ async function trigger(timer) {
   }
 }
 
-const job = new CronJob('00 00 01 * * *', async () => {
+const job = new CronJob('00 34 22 * * *', async () => {
   trigger('01');
 });
 job.start();
@@ -220,7 +220,7 @@ app.post('/api/signup', async (req, res) => {
   const { name } = req.body;
   const { email } = req.body;
   const { password } = req.body;
-  const expired = 3600; // Fix compare token
+  const expired = 3600; // Fix check token
   try {
     const result = await findEmail(email);
     if (result.length !== 0) { // Resend verify email
