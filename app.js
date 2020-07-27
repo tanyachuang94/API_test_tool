@@ -32,11 +32,13 @@ app.use('/api/',
   ]);
 
 async function trigger(timer) {
+  console.log('hi');
   const today = new Date();
   function auto(num) {
     return new Promise((resolve) => {
       db.query('SELECT * FROM script WHERE start_date <= ? AND end_date >= ? AND start_time = ?  ', [today, today, num], (err, result) => {
         if (err) throw err;
+        console.log(result);
         resolve(result);
       });
     });
@@ -80,7 +82,7 @@ async function trigger(timer) {
   }
 }
 
-const job = new CronJob('00 34 22 * * *', async () => {
+const job = new CronJob('50 40 22 * * *', async () => {
   trigger('01');
 });
 job.start();
