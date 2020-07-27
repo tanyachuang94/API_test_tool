@@ -81,7 +81,7 @@ async function trigger(timer) {
 }
 
 const job = new CronJob({
-  cronTime: '00 46 23 * * *',
+  cronTime: '00 00 01 * * *',
   onTick() { trigger('01'); },
   timeZone: 'Asia/Taipei',
 });
