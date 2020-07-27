@@ -1,7 +1,7 @@
 const isEqual = require('lodash.isequal');
 const flatten = require('flat');
-const Test = require('../models/test_model');
 const { json } = require('body-parser');
+const Test = require('../models/test_model');
 
 const getTest = async (req, res) => {
   const specId = req.query.id;
@@ -20,40 +20,41 @@ const saveTest = async (req, res) => {
   const save = await Test.saveDetail(specId, detail);
   res.send(JSON.stringify(save));
 };
-const compare = async (req, res) => {
-  const specId = req.body.specId;
-  const apiId = req.body.apiId;
-  const specCheck = req.body.specCheck;
-  const spec = JSON.parse(req.body.spec_res);
-  const specTime = req.body.specTime;
-  const specCode = req.body.specCode;
-  const resultTime = req.body.response.time;
-  const resultStatus = req.body.response.status;
-  let resultData = req.body.response.body;
-  const network = req.body.network;
+
+const helper = async (req) => {
+  const { specId } = req;
+  const { apiId } = req;
+  const { specCheck } = req;
+  const spec = JSON.parse(req.spec_res);
+  const { specTime } = req;
+  const { specCode } = req;
+  const resultTime = req.response.time;
+  const resultStatus = req.response.status;
+  const resultData = req.response.body;
+  const { network } = req;
   const testTime = Date.now();
   let time = '';
   let code = '';
   let data = '';
   let result = '';
   let testResult = '';
-  let failList = [];
+  const failList = [];
 
-  function sortObject(obj) {  // sort object
-    return Object.keys(obj).sort().reduce(function (result, key) {
+  function sortObject(obj) { // sort object
+    return Object.keys(obj).sort().reduce((result, key) => {
       result[key] = obj[key];
       return result;
     }, {});
   }
 
   if (resultTime > specTime) {
-    time = '<font color="red">' + resultTime + '</font>'
+    time = `<font color="red">${resultTime}</font>`;
     failList.push('time');
   } else {
     time = resultTime;
   }
   if (resultStatus != specCode) {
-    code = '<font color="red">' + resultStatus + '</font>'
+    code = `<font color="red">${resultStatus}</font>`;
     failList.push('code');
   } else {
     code = resultStatus;
@@ -66,22 +67,22 @@ const compare = async (req, res) => {
       failList.push('data');
     }
   } else {
-    const specType = flatten(spec);  // json > object
+    const specType = flatten(spec); // json > object
     const resultType = flatten(resultData);
-    if (specType.length == resultType.length) {  // values type fail
+    if (specType.length == resultType.length) { // values type fail
       data = 'pass';
       const specVal = Object.values(sortObject(specType));
       const resultVal = Object.values(sortObject(resultType));
 
       for (let i = 0; i < specVal.length; i += 1) {
-        if (specVal[i] != typeof resultVal[i]) {
-          data = 'fail';  // values fail
+        if (specVal[i] !== typeof resultVal[i]) {
+          data = 'fail'; // values fail
           failList.push('data');
           break;
         }
       }
     } else {
-      data = 'fail';  // keys fail
+      data = 'fail'; // keys fail
       failList.push('data');
     }
   }
@@ -104,11 +105,19 @@ const compare = async (req, res) => {
       test_res_code: resultStatus,
       test_res_time: resultTime,
       test_time: testTime,
-      network: network,
+      network,
     };
     if (failList.length > 0) { testRes.test_fails = JSON.stringify(failList); }
     Test.saveRecord(testRes);
-    res.status(200).send(results);
+    return results;
+  }
+  return { error: 'Wrong Request' };
+};
+
+const compare = async (req, res) => {
+  const re = await helper(req.body);
+  if (!re.error) {
+    res.status(200).send(re);
   } else {
     res.status(400).send({ error: 'Wrong Request' });
   }
@@ -119,4 +128,5 @@ module.exports = {
   testDetail,
   saveTest,
   compare,
+  helper,
 };
