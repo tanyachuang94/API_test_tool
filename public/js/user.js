@@ -5,15 +5,14 @@ const signup_form = document.getElementById('signup_form');
 const signupBtn = document.getElementById('signupBtn');
 const loginBtn = document.getElementById('loginBtn');
 
-
 const modal_2 = document.getElementById('myModal_2');
 const myBtn = document.getElementById('myBtn');
-const userIcon = document.getElementById('userIcon')
+const userIcon = document.getElementById('userIcon');
 const user = document.getElementById('user');
 const name = localStorage.getItem('name');
 const token = localStorage.getItem('token');
 
-if (name) {    //Fix check token valid
+if (name) { // Fix check token valid
   userIcon.style.display = 'block';
   const img = document.createElement('img');
   img.setAttribute('src', 'imgs/user.png');
@@ -45,7 +44,7 @@ nav_signup.addEventListener('click', () => {
   nav_login.style.background = 'none';
 });
 
-myBtn.onclick = function () {  // login button
+myBtn.onclick = function () { // login button
   // if (!localStorage.getItem('token')) {
   if (myBtn.innerHTML == 'Login') {
     modal_2.style.display = 'block';
@@ -71,9 +70,9 @@ function postData(url, data) {
     method: 'POST',
   })
     .then((res) => res.json())
-    .then(result => {
+    .then((result) => {
       if (result.error) {
-        alert(result.error)
+        alert(result.error);
       } else {
         localStorage.setItem('name', result.name);
         localStorage.setItem('token', result.token);
