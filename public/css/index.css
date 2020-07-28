@@ -1,0 +1,10 @@
+@import "base.css";
+
+main>.view>{
+  display: flex;
+  flex-wrap: wrap;flex-direction: row;
+  justify-content: center;
+}
+main>.view>.item{
+  margin: 20px; width:20%;
+}
