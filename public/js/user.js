@@ -1,5 +1,6 @@
 const nav_login = document.getElementById('nav_login');
 const nav_signup = document.getElementById('nav_signup');
+const home_signup = document.getElementById('home_signup');
 const login_form = document.getElementById('login_form');
 const signup_form = document.getElementById('signup_form');
 const signupBtn = document.getElementById('signupBtn');
@@ -25,7 +26,6 @@ if (name) { // Fix check token valid
   document.getElementById('testPage').style.display = 'block';
   document.getElementById('scrPage').style.display = 'block';
   document.getElementById('repPage').style.display = 'block';
-  document.getElementById('dashPage').style.display = 'block';
 } else {
   // Fix redirect to login page in non-login status
 }
@@ -50,7 +50,7 @@ myBtn.onclick = function () { // login button
     modal_2.style.display = 'block';
   } else {
     localStorage.clear();
-    window.location.href = './request.html';
+    window.location.href = './index.html';
   }
 };
 
@@ -76,7 +76,7 @@ function postData(url, data) {
       } else {
         localStorage.setItem('name', result.name);
         localStorage.setItem('token', result.token);
-        window.location.href = './request.html';
+        window.location.href = './index.html';
       }
     })
     .catch((err) => console.log(err));

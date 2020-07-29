@@ -10,18 +10,18 @@
 
 <body>
   <header>
-    <div class="logo"><img src="./imgs/logo_api.png" /></div>
+    <div class="logo"><a href="index.html"><img src="imgs/logo_api.png" /></a></div>
     <nav>
       <div class="item" id="reqPage"><a href="./request.html">Request</a></div>
       <div class="item" id="testPage" style="display:none"><a href="./test.html">Test</a></div>
       <div class="item" id="scrPage" style="display:none"><a href="./script.html">Script</a></div>
       <div class="item" id="repPage" style="display:none"><a href="./report.html">Report</a></div>
-      <div class="item" id="dashPage" style="display:none"><a href="./dashboard.html">Dashboard</a></div>
     </nav>
     <div class="user">
       <div id="userIcon" style="display:none"></div>
       <div id="user" style="display:none"></div>
-      <button id="myBtn" style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px">Login</button>
+      <button id="myBtn"
+        style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px; color: #494949;">Login</button>
     </div>
   </header>
   <main>
@@ -50,9 +50,10 @@
         <div class="item" id="headers" style="color:#494949;">Headers</div>
         <div class="item" id="body" style="color:#8FC5B9">Body</div>
       </div></br>
+      <div class="content" style="font-size: 0.8em; color: rgb(185, 184, 184);">Please input data in JSON format.</div>
       <div class="content">
-        <textarea class="text" name="headersText" id="headersText" style="display:block"
-          placeholder='format :&#13;&#10;{"Content-Type":"application/json"}'></textarea>
+        <textarea class="text" name="headersText" id="headersText"
+          style="display:block">{"Content-Type":"application/json"}</textarea>
         <textarea class="text" name="bodyText" id="bodyText" style="display:none;"></textarea>
       </div></br>
       <div class="tab"><input class="button" type="submit" value="SEND" onclick="send()" style= /></div>

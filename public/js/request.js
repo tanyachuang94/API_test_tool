@@ -21,16 +21,19 @@ body.addEventListener('click', () => {
 });
 
 function send() {
-  const domain = document.getElementById('domain').value;
+  let domain = document.getElementById('domain').value;
   if (domain.length == 0) {
     window.alert('Please input Domain.');
   } else {
+    domain = domain.replace(/(^\/+|\/+$)/mg, ''); // remove the first and last slash
     const protocol = document.getElementById('protocol').value;
     const method = document.getElementById('method').value;
     const data = { protocol, domain, method };
 
     if (document.getElementById('endpoint').value.length > 0) {
-      data.endpoint = document.getElementById('endpoint').value;
+      let endpoint = document.getElementById('endpoint').value;
+      endpoint = endpoint.replace(/(^\/+|\/+$)/mg, '');
+      data.endpoint = endpoint;
     }
     if (document.getElementById('headersText').value.length > 0) {
       data.headers = document.getElementById('headersText').value;
@@ -52,9 +55,7 @@ function send() {
           // document.getElementById('view1').appendChild(script);
 
           const line = document.getElementById('line');
-
           line.style.display = 'block';
-
           const divView2 = document.createElement('div');
           divView2.setAttribute('id', 'view2');
           divView2.setAttribute('class', 'view');

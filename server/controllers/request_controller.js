@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 const sendReq = async (req, res) => {
   let endpoint = '';
-  if (req.body.endpoint.length > 0) {
+  if (req.body.endpoint != undefined) {
     endpoint = req.body.endpoint;
   }
   const url = `${req.body.protocol}://${req.body.domain}/${endpoint}`;
@@ -20,12 +20,11 @@ const sendReq = async (req, res) => {
   const start = Date.now();
   const result = await fetch(url, data)
     .then((response) => {
-      console.log(response);
       if (response.status == 404) {
-        detail.body = `${response.url}  ${response.statusText}`;
         detail.time = response.timeout;
         detail.status = response.status;
-        res.send(detail); // fix server 404 error, restart app.js (wrong method or url)
+        return `${response.url}  ${response.statusText}`;
+        // fix server 404 error, restart app.js (wrong method or url)
       }
       const end = Date.now() - start;
       detail.time = end;
@@ -39,7 +38,7 @@ const sendReq = async (req, res) => {
       res.send(detail);
     });
   detail.body = result;
-  res.json(detail);
+  res.send(detail);
 };
 
 module.exports = {

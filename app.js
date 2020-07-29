@@ -37,6 +37,7 @@ async function trigger(timer) {
     return new Promise((resolve) => {
       db.query('SELECT * FROM script WHERE start_date <= ? AND end_date >= ? AND start_time = ?  ', [today, today, num], (err, result) => {
         if (err) throw err;
+        console.log(result);
         resolve(result);
       });
     });
@@ -256,7 +257,7 @@ app.get('/api/verify', async (req, res) => {
   const signupToken = req.query.token;
   db.query('UPDATE user SET status = 1 WHERE token = ?', signupToken, (err, result) => {
     if (err) throw err;
-    res.redirect('../request.html');
+    res.redirect('../index.html');
   });
 });
 

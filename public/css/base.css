@@ -61,7 +61,7 @@ header>nav>.current{
 	color:#494949;
 }
 main{
-  height:80%;
+  height:72%;
   overflow:auto; padding-bottom: 100px;
 }
 /* Fix footer align */

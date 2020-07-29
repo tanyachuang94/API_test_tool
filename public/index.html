@@ -6,6 +6,7 @@
   <link rel=icon href="./imgs/favicon.ico" sizes="16x16" type="image/png">
   <link rel="stylesheet" href="./css/index.css">
   <link rel="stylesheet" href="./css/user.css">
+
 </head>
 
 <body>
@@ -16,18 +17,17 @@
       <div class="item" id="testPage" style="display:none"><a href="./test.html">Test</a></div>
       <div class="item" id="scrPage" style="display:none"><a href="./script.html">Script</a></div>
       <div class="item" id="repPage" style="display:none"><a href="./report.html">Report</a></div>
-      <div class="item" id="dashPage" style="display:none"><a href="./dashboard.html">Dashboard</a></div>
     </nav>
     <div class="user">
       <div id="userIcon" style="display:none"></div>
       <div id="user" style="display:none"></div>
-      <button id="myBtn" style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px">Login</button>
+      <button id="myBtn"
+        style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px; color: #494949;">Login</button>
     </div>
   </header>
-  <main>
+  <main><br>
     <div class="view">
-      <div class="picture"><img src="./imgs/home.jpg" /></div>
-      <div class="item" style="border:solid red">test</div>
+      <div class="picture" id="home_signup"><img src="./imgs/home.jpg" width="100%" /></div>
     </div>
   </main>
   <div id="myModal_2" class="modal_2">
@@ -50,12 +50,16 @@
     </div>
   </div>
 </body>
-<!-- <footer>
+<footer>
   <div class="item">
     &copy; 2020. All rights reserved.
   </div>
-</footer> -->
+</footer>
 
 <script src='js/user.js'></script>
+<script>
+  home_signup.addEventListener('click', () => {
+    modal_2.style.display = 'block';
+  });</script>
 
 </html>
