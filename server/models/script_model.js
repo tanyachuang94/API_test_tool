@@ -2,7 +2,7 @@ const db = require('../../mysqlcon.js');
 
 const getScriptDetail = async (scriptId) => {
   function detail(scriptId) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       db.query('SELECT * FROM script WHERE id = ?', [scriptId], (err, result) => {
         if (err) throw err;
         resolve(result);
@@ -15,8 +15,8 @@ const getScriptDetail = async (scriptId) => {
 
 const getSpecs = async () => {
   function spec() {
-    return new Promise(resolve => {
-      db.query('SELECT * FROM spec', (err, result) => {
+    return new Promise((resolve) => {
+      db.query('SELECT * FROM spec ORDER BY spec_name', (err, result) => {
         if (err) throw err;
         resolve(result);
       });
@@ -28,7 +28,7 @@ const getSpecs = async () => {
 
 const getScripts = async () => {
   function script() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       db.query('SELECT * FROM script', (err, result) => {
         if (err) throw err;
         resolve(result);
@@ -41,7 +41,7 @@ const getScripts = async () => {
 
 const addScript = async (data) => {
   try {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       db.query('INSERT INTO script SET ?', data, (err, result) => {
         if (err) throw err;
         resolve(result.insertId);
@@ -54,13 +54,12 @@ const addScript = async (data) => {
 
 const updateScript = async (scriptId, data) => {
   try {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       db.query('UPDATE script SET ? WHERE id = ?', [data, scriptId], (err, result) => {
         if (err) throw err;
         resolve(result);
       });
     });
-    
   } catch (error) {
     return error;
   }

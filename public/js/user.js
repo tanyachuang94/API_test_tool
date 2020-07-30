@@ -13,6 +13,13 @@ const user = document.getElementById('user');
 const name = localStorage.getItem('name');
 const token = localStorage.getItem('token');
 
+if (!token || !name) {
+  localStorage.clear();
+  if (location.pathname != '/index.html' && location.pathname != '/request.html') {
+    window.location.href = './index.html';
+  }
+}
+
 if (name) { // Fix check token valid
   userIcon.style.display = 'block';
   const img = document.createElement('img');
@@ -69,14 +76,18 @@ function postData(url, data) {
     },
     method: 'POST',
   })
-    .then((res) => res.json())
-    .then((result) => {
-      if (result.error) {
-        alert(result.error);
+    .then((result) => result.json())
+    .then((json) => {
+      if (json.error) {
+        sweetAlert(json.error);
+      } else if (json.id) {
+        // alert(json);
+        localStorage.setItem('name', json.name);
+        localStorage.setItem('token', json.token);
+        window.location.href = './request.html';
       } else {
-        localStorage.setItem('name', result.name);
-        localStorage.setItem('token', result.token);
-        window.location.href = './index.html';
+        modal_2.style.display = 'none';
+        sweetAlert(json);
       }
     })
     .catch((err) => console.log(err));
@@ -86,17 +97,17 @@ signupBtn.addEventListener('click', () => {
   // modal_2.style.display = 'none';
   const name = document.getElementById('signup_name').value;
   if (!name) {
-    alert('Please enter your name.');
+    sweetAlert('Please enter your name.');
     return;
   }
   const email = document.getElementById('signup_email').value;
   if (!email) {
-    alert('Please enter your email.');
+    sweetAlert('Please enter your email.');
     return;
   }
   const password = document.getElementById('signup_password').value;
   if (!password) {
-    alert('Please enter your password.');
+    sweetAlert('Please enter your password.');
     return;
   }
   const data = {
@@ -108,12 +119,12 @@ signupBtn.addEventListener('click', () => {
 loginBtn.addEventListener('click', () => {
   const email = document.getElementById('login_email').value;
   if (!email) {
-    alert('Please enter your email.');
+    sweetAlert('Please enter your email.');
     return;
   }
   const password = document.getElementById('login_password').value;
   if (!password) {
-    alert('Please enter your password.');
+    sweetAlert('Please enter your password.');
     return;
   }
   const data = { email, password };

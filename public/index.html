@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -6,7 +7,7 @@
   <link rel=icon href="./imgs/favicon.ico" sizes="16x16" type="image/png">
   <link rel="stylesheet" href="./css/index.css">
   <link rel="stylesheet" href="./css/user.css">
-
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -27,7 +28,28 @@
   </header>
   <main><br>
     <div class="view">
-      <div class="picture" id="home_signup"><img src="./imgs/home.jpg" width="100%" /></div>
+      <!-- Slideshow container -->
+      <div class="slideshow-container" id="home_signup">
+        <div class="mySlides fade">
+          <img src="./imgs/home1.jpg" style="width:70%" >
+        </div>
+        <div class="mySlides fade">
+          <img src="./imgs/home2.png" style="width:70%; border-radius: 0.7em" >
+        </div>
+        <div class="mySlides fade">
+          <img src="./imgs/home3.png" style="width:70%; border-radius: 0.7em">
+        </div>
+      </div>
+    <br>
+      <!-- The dots/circles -->
+      <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+      </div>
+      <!-- <div class="view">
+        <div class="picture" id="home_signup"><img src="./imgs/home.jpg" width="100%" /></div>
+      </div> -->
     </div>
   </main>
   <div id="myModal_2" class="modal_2">
@@ -39,7 +61,7 @@
           <input id="signup_name" class="input" type="text" name="name" placeholder="Your Name"><br>
           <input id="signup_email" class="input" type="email" name="email" placeholder="Your Email Address"><br>
           <input id="signup_password" class="input" type="password" name="password" placeholder="Choose a Password"><br>
-          <button class="btn" id="signupBtn">Create account</button>
+          <button class="btn" id="signupBtn" type="submit">Create account</button>
         </div>
         <div class="form login-form" id="login_form">
           <input id="login_email" class="input" type="email" name="email" placeholder="Email"><br>
@@ -58,8 +80,32 @@
 
 <script src='js/user.js'></script>
 <script>
-  home_signup.addEventListener('click', () => {
-    modal_2.style.display = 'block';
-  });</script>
+  var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+  </script>
+<script>
+  if (!localStorage.getItem('token') && !localStorage.getItem('name')) {
+    home_signup.addEventListener('click', () => {
+      modal_2.style.display = 'block';
+    });
+  }
+</script>
 
 </html>

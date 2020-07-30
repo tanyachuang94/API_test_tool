@@ -1,4 +1,6 @@
 document.getElementById('scrPage').classList.add('current');
+const startDate = document.getElementById('startDate');
+const endDate = document.getElementById('endDate');
 
 let scriptList = document.getElementById('scriptList');
 function addScript() {
@@ -6,6 +8,16 @@ function addScript() {
   scriptList = 'new';
   document.getElementById('script').setAttribute('style', 'display: block; font-size:0.8em; width:300px; height:30px; margin: 7px');
   document.getElementById('add').setAttribute('style', 'display: none');
+  const today = new Date();
+  console.log(today);
+  startDate.valueAsDate = today;
+  Date.prototype.addDays = function (days) { // add 10 days to current date
+    const date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  };
+  const end = today.addDays(10);
+  endDate.valueAsDate = end;
 }
 fetch('/api/specs')
   .then((res) =>　res.json())
@@ -36,8 +48,8 @@ function load(script) {
     .then((res) =>　res.json())
     .then((json) => {
       document.getElementById('spec1').value = json.spec_id;
-      document.getElementById('startDate').setAttribute('value', json.start_date);
-      document.getElementById('endDate').setAttribute('value', json.end_date);
+      startDate.setAttribute('value', json.start_date);
+      endDate.setAttribute('value', json.end_date);
       document.getElementById('startTime').value = json.start_time;
       // document.getElementById('frequency').value = json.frequency;
     });
@@ -49,8 +61,8 @@ function readScript(selectObject) {
 function saveScript() {
   const data = {};
   data.spec_id = [document.getElementById('spec1').value];
-  data.start_date = document.getElementById('startDate').value;
-  data.end_date = document.getElementById('endDate').value;
+  data.start_date = startDate.value;
+  data.end_date = endDate.value;
   data.start_time = document.getElementById('startTime').value;
   // data.frequency = document.getElementById('frequency').value;
   if (scriptList == 'new') {

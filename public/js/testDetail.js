@@ -111,7 +111,7 @@ async function saveTest() {
       if (json.result == 'save') {
         window.location = `test_detail.html?id=${getID}`;
       } else {
-        alert(json.result);
+        sweetAlert(json.result);
       }
     });
 }

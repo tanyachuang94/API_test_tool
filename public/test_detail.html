@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="./css/test.css">
   <link rel="stylesheet" href="./css/user.css">
   <script src='js/testDetail.js'></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -59,15 +60,15 @@
         <div class="title">Request Body</div>
       </div><br>
       <div class="content">
-        <textarea class="area" id="req_header" style="height: 100px"></textarea>
-        <textarea class="area" id="req_body" style="height: 100px"></textarea>
+        <textarea class="area" id="req_header" style="height: 100px" placeholder="Please input data in JSON format."></textarea>
+        <textarea class="area" id="req_body" style="height: 100px" placeholder="Please input data in JSON format."></textarea>
       </div><br>
       <div class="content">
         <div class="title" id="expected">Expected Response</div>
         <div class="title" id="actual">Actual Response</div>
       </div><br>
       <div class="content">
-        <textarea class="area" id="res_data" style="height: 250px"></textarea>
+        <textarea class="area" id="res_data" style="height: 250px" placeholder="Please input data in JSON format."></textarea>
         <pre class="area" id="act_data"
           style="height: 250px; font-size:0.4em; overflow-y:scroll; white-space: pre-wrap"></pre>
       </div><br>

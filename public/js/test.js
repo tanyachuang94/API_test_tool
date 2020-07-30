@@ -56,10 +56,10 @@ async function addSpec() {
   const domain = document.getElementById('add_domain').value;
   const test = document.getElementById('add_test').value;
   if (domain.length == 0) {
-    window.alert('Please input Domain.');
+    sweetAlert('Please input Domain.');
   }
   if (test.length == 0) {
-    window.alert('Please input Test Case Name.');
+    sweetAlert('Please input Test Case Name.');
   } else {
     fetch('/api/addspec', {
       body: JSON.stringify({

@@ -23,7 +23,7 @@ body.addEventListener('click', () => {
 function send() {
   let domain = document.getElementById('domain').value;
   if (domain.length == 0) {
-    window.alert('Please input Domain.');
+    sweetAlert('Please input Domain.');
   } else {
     domain = domain.replace(/(^\/+|\/+$)/mg, ''); // remove the first and last slash
     const protocol = document.getElementById('protocol').value;

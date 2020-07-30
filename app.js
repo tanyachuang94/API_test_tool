@@ -194,7 +194,7 @@ function findEmail(email) {
     });
   });
 }
-function sendEmail(email, hashToken) {
+function sendEmail(email, name, hashToken) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -210,7 +210,26 @@ function sendEmail(email, hashToken) {
     from: 'API Test Tool',
     to: email,
     subject: 'Thanks for your registration.',
-    text: `Please activate your account to login by clicking https://api_test.tanyachuang.site/api/verify?token=${hashToken}`,
+    text: `
+    Hi ${name}
+      Please activate your account by clicking https://api_test.tanyachuang.site/api/verify?token=${hashToken}
+
+    Let's try it!
+
+    Sample data #1
+    Method: GET
+    Protocol: HTTPS
+    Domain: api.appworks-school.tw
+    Endpoint: api/1.0/marketing/campaigns
+
+    Sample data #2
+    Method: POST
+    Protocol: HTTPS
+    Domain: api.appworks-school.tw
+    Endpoint: api/1.0/user/signup
+    Headers: {"Content-Type":"application/json"}
+    Body: {"name":"test","email":"test@test.com","password":"test"}
+    `,
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
@@ -228,7 +247,7 @@ app.post('/api/signup', async (req, res) => {
   const expired = 3600; // Fix check token
   try {
     const result = await findEmail(email);
-    if (result.length !== 0) { // Resend verify email
+    if (result.length !== 0) { // Fix resend verify email
       res.status(403).send({ error: 'Email Already Exists. ' });
     } else {
       const token = email + Date();
@@ -246,7 +265,8 @@ app.post('/api/signup', async (req, res) => {
         //   token: hashToken,
         // });
       });
-      sendEmail(email, hashToken);
+      sendEmail(email, name, hashToken);
+      res.status(400).send(JSON.stringify('Confirm email sent. Please check your email and activate the account.'));
     }
   } catch (error) {
     return error;
@@ -263,7 +283,6 @@ app.get('/api/verify', async (req, res) => {
 
 app.post('/api/login', async (req, res) => {
   const { email } = req.body;
-
   const { password } = req.body;
   try {
     const result = await findEmail(email);

@@ -9,17 +9,17 @@ const sendReq = async (req, res) => {
   const data = {};
   data.method = req.body.method;
   if (req.body.headers != null || req.body.headers != undefined) {
-    const Str = req.body.headers.replace(/'/g, '"');
+    const Str = req.body.headers.replace(/'/g, '"'); // replace '
     data.headers = JSON.parse(Str); // Fix to check when json parse fail
   }
   if (req.body.body != null || req.body.body != undefined) {
-    // const Str = req.body.body.replace(/'/g, '"');
     data.body = req.body.body;
   }
   const detail = {};
   const start = Date.now();
   const result = await fetch(url, data)
     .then((response) => {
+      console.log(response);
       if (response.status == 404) {
         detail.time = response.timeout;
         detail.status = response.status;
