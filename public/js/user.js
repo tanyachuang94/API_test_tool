@@ -33,8 +33,6 @@ if (name) { // Fix check token valid
   document.getElementById('testPage').style.display = 'block';
   document.getElementById('scrPage').style.display = 'block';
   document.getElementById('repPage').style.display = 'block';
-} else {
-  // Fix redirect to login page in non-login status
 }
 
 nav_login.addEventListener('click', () => {

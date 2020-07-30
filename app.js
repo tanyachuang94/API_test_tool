@@ -219,7 +219,7 @@ function sendEmail(email, name, hashToken) {
     Sample data #1
     Method: GET
     Protocol: HTTPS
-    Domain: api.appworks-school.tw
+    Domain: tanyachuang.site
     Endpoint: api/1.0/marketing/campaigns
 
     Sample data #2
