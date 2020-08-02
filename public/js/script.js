@@ -30,19 +30,6 @@ fetch('/api/specs')
       document.getElementById('spec1').appendChild(opt);
     }
   });
-
-fetch('/api/scrpits')
-  .then((res) =>　res.json())
-  .then((json) => {
-    for (let i = 0; i < json.length; i += 1) {
-      const opt = document.createElement('option');
-      opt.setAttribute('value', json[i].id);
-      // opt.setAttribute('id', json.spec_name[i]);
-      opt.innerHTML = json[i].script_name;
-      document.getElementById('scriptList').appendChild(opt);
-    }
-  });
-
 function load(script) {
   fetch(`/api/script?id=${script}`)
     .then((res) =>　res.json())
@@ -58,6 +45,19 @@ function readScript(selectObject) {
   const script = selectObject.value;
   load(script);
 }
+fetch('/api/scrpits')
+  .then((res) =>　res.json())
+  .then((json) => {
+    for (let i = 0; i < json.length; i += 1) {
+      if (i == 0) { load(json[0].id); }
+      const opt = document.createElement('option');
+      opt.setAttribute('value', json[i].id);
+      // opt.setAttribute('id', json.spec_name[i]);
+      opt.innerHTML = json[i].script_name;
+      document.getElementById('scriptList').appendChild(opt);
+    }
+  });
+
 function saveScript() {
   const data = {};
   data.spec_id = [document.getElementById('spec1').value];

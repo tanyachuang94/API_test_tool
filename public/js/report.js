@@ -12,7 +12,13 @@ function load() {
         data.appendChild(tr);
         const td1 = document.createElement('td');
         tr.appendChild(td1);
-        td1.innerHTML = json[i].spec_name;
+        const aTest = document.createElement('a');
+        aTest.setAttribute('href', `report_detail.html?id=${json[i].id}`);
+        td1.appendChild(aTest);
+        // divApi.parentNode.insertBefore(aApi, divApi.nextSibling)
+        aTest.innerHTML = json[i].spec_name;
+
+        // td1.innerHTML = `<a href="report_detail.html?id=${json[i].id}>${json[i].spec_name}</a>`;
         const td2 = document.createElement('td');
         td2.setAttribute('align', 'center');
         tr.appendChild(td2);

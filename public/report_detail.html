@@ -7,7 +7,8 @@
   <link rel=icon href="./imgs/favicon.ico" sizes="16x16" type="image/png">
   <link rel="stylesheet" href="./css/test.css">
   <link rel="stylesheet" href="./css/user.css">
-  <script src='js/testDetail.js'></script>
+  <!-- <script src='js/testDetail.js'></script> -->
+  
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
@@ -32,25 +33,19 @@
       <div class="content"
         style="width:70%; padding: 4px; border: 3px dashed; border-radius: 5px; border-color: rgb(110, 155, 145)">
         <div class="item">Test Case <br>
-          <input id="spec_name" style="width:250px"></input>
+          <div id="spec_name" style="width:300px; height: 30px; margin-top: 5px; line-height: 30px; border: solid grey 1px; border-radius:2px;"></div>
         </div>
         <div class="item">Method <br>
-          <select id="method">
-            <option value="GET" id="GET">GET</option>
-            <option value="POST" id="POST">POST</option>
-          </select>
+          <div id="method" style="width:70px; height: 30px; margin-top: 5px; line-height: 30px; border: solid grey 1px; border-radius:2px;"></div>
         </div>
         <div class="item">Check <br>
-          <select id="res_check">
-            <option value="DATA" id="DATA">DATA</option>
-            <option value="TYPE" id="TYPE">TYPE</option>
-          </select>
+          <div id="res_check" style="width:70px; height: 30px; margin-top: 5px; line-height: 30px; border: solid grey 1px; border-radius:2px;"></div>
         </div>
         <div class="item">Code status <br>
-          <input id="code" style="width:80px"></input>
+          <div id="code" style="width:80px; height: 30px; margin-top: 5px; line-height: 30px; border: solid grey 1px; border-radius:2px;"></div>
         </div>
         <div class="item">Response Time(ms) <br>
-          <input id="time" style="width:80px"></input>
+          <div id="time" style="width:80px; height: 30px; margin-top: 5px; line-height: 30px; border: solid grey 1px; border-radius:2px;"></div>
         </div>
       </div><br>
       <div class="content">
@@ -61,23 +56,17 @@
         <div class="title">Request Body</div>
       </div><br>
       <div class="content">
-        <pre class="area" id="req_header" style="height: 100px" placeholder="Please input data in JSON format."></pre>
-        <pre class="area" id="req_body" style="height: 100px" placeholder="Please input data in JSON format."></pre>
+        <pre class="area" id="req_header" style="height: 100px" ></pre>
+        <pre class="area" id="req_body" style="height: 100px"></pre>
       </div><br>
       <div class="content">
         <div class="title" id="expected">Expected Response</div>
-        <div class="title" id="actual">Actual Response</div>
+        <div class="title" id="actual" style="color:green">Actual Response</div>
       </div><br>
       <div class="content">
-        <pre class="area" id="res_data" style="height: 250px" placeholder="Please input data in JSON format."></pre>
-        <pre class="area" id="act_data"
-          style="height: 250px; font-size:0.4em; overflow-y:scroll; white-space: pre-wrap"></pre>
+        <pre class="area" id="res_data" style="height: 250px"></pre>
+        <pre class="area" id="act_data" style="height: 250px"></pre>
       </div><br>
-
-      <div class="content">
-        <input class="button" type="submit" value="SAVE" onclick="saveTest()" />
-        <input class="button" type="submit" value="SEND" onclick="sendTest()" />
-      </div>
     </div>
   </main>
   <div id="myModal_2" class="modal_2">
@@ -101,6 +90,52 @@
   </div>
 </body>
 <script src='js/user.js'></script>
+<script>
+  const getURL = location.href; 
+  const url = new URL(getURL);
+  const getID = url.searchParams.get('id'); 
+  fetch(`/api/report_detail?id=${getID}`) 
+  .then((res) => res.json())
+  .then((json) => {
+    let result = json.test_result;
+    let res_code = json.test_res_code;
+    let res_time = json.test_res_time;
+    console.log(json)
+    document.getElementById('method').innerHTML = json.method;
+    document.getElementById('res_check').innerHTML = json.res_check;
+    document.getElementById('spec_name').innerHTML = json.spec_name;
+    document.getElementById('req_header').innerHTML = json.req_header;
+    document.getElementById('req_body').innerHTML = json.req_body;
+    document.getElementById('res_data').innerHTML = JSON.stringify(JSON.parse(json.res_data), null, 2);
+    document.getElementById('act_data').innerHTML = JSON.stringify(JSON.parse(json.test_res_body), null, 2);
+    document.getElementById('code').innerHTML = json.res_code;
+    document.getElementById('time').innerHTML = json.res_time;
+    expected = json.res_data;
+    specCheck = json.res_check;
+    specTime = json.res_time;
+    specCode = json.res_code;
+    
+    if (result == "Fail"){result = `<font color="red">Fail</font>`}
+    else {result = `<font color="green">Pass</font>`}
+    var fails = JSON.parse(json.test_fails);  //string轉array
+    if (fails){
+      
+      for (let i=0; i<fails.length; i+=1){
+      if (fails[i] == 'time'){res_time = '<font color="red">'+ res_time + '</font>'}
+      if (fails[i] == 'code'){res_code = '<font color="red">'+ res_code + '</font>'}
+      if (fails[i] == 'data'){document.getElementById('actual').setAttribute('style', 'color:red')}
+    }
+    }
+   
+    document.getElementById('resStatus').innerHTML = `Test Result : ${result} / Code Status : ${res_code} / Time : ${res_time} (ms)` + ` / Network : ${json.network}`;
+
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+    
+
+</script>
 <!-- <footer>
     <div class="item">
       &copy; 2020. All rights reserved.

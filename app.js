@@ -37,7 +37,6 @@ async function trigger(timer) {
     return new Promise((resolve) => {
       db.query('SELECT * FROM script WHERE start_date <= ? AND end_date >= ? AND start_time = ?  ', [today, today, num], (err, result) => {
         if (err) throw err;
-        console.log(result);
         resolve(result);
       });
     });
@@ -76,7 +75,6 @@ async function trigger(timer) {
     req.body.specId = spec[i].spec_id;
     req.body.response = resultDetail;
     req.body.network = '4g'; // Fix get network traffic
-
     compare.helper(req.body);
   }
 }

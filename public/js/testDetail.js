@@ -82,6 +82,8 @@ async function sendTest() {
     .then((json) => {
       if (json.data == 'fail') {
         document.getElementById('actual').setAttribute('style', 'color:red');
+      } else {
+        document.getElementById('actual').setAttribute('style', 'color:green');
       }
       document.getElementById('resStatus').innerHTML = `Test Result : ${json.result} / Code Status : ${json.code} / Time : ${json.time} (ms)` + ` / Network : ${network}`;
     })
