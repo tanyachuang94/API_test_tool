@@ -27,7 +27,6 @@ async function readApi() {
   while (parent.firstChild) {
     parent.firstChild.remove();
   }
-  // fix : clear spec list before readapi
   fetch('/api/readapi', {
     body: JSON.stringify({
       protocol: document.getElementById('protocol').value,
@@ -47,9 +46,11 @@ async function readApi() {
         const aSpec = document.createElement('a');
         aSpec.setAttribute('href', `./test_detail.html?id=${json[i].id}`);
         document.getElementById(`api${json[i].id}`).appendChild(aSpec);
-        // divApi.parentNode.insertBefore(aApi, divApi.nextSibling)
         aSpec.innerHTML = json[i].spec_name;
       }
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
 async function addSpec() {
@@ -74,6 +75,9 @@ async function addSpec() {
       .then((result) => result.json())
       .then((json) => {
         window.location = `./test_detail.html?id=${json}`;
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 }

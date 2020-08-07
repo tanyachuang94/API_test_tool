@@ -1,12 +1,11 @@
 const nav_login = document.getElementById('nav_login');
 const nav_signup = document.getElementById('nav_signup');
-const home_signup = document.getElementById('home_signup');
 const login_form = document.getElementById('login_form');
 const signup_form = document.getElementById('signup_form');
 const signupBtn = document.getElementById('signupBtn');
 const loginBtn = document.getElementById('loginBtn');
 
-const modal_2 = document.getElementById('myModal_2');
+const modal = document.getElementById('modal');
 const myBtn = document.getElementById('myBtn');
 const userIcon = document.getElementById('userIcon');
 const user = document.getElementById('user');
@@ -50,9 +49,8 @@ nav_signup.addEventListener('click', () => {
 });
 
 myBtn.onclick = function () { // login button
-  // if (!localStorage.getItem('token')) {
   if (myBtn.innerHTML == 'Login') {
-    modal_2.style.display = 'block';
+    modal.style.display = 'block';
   } else {
     localStorage.clear();
     window.location.href = './index.html';
@@ -61,8 +59,8 @@ myBtn.onclick = function () { // login button
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
-  if (event.target == modal_2) {
-    modal_2.style.display = 'none';
+  if (event.target == modal) {
+    modal.style.display = 'none';
   }
 };
 
@@ -79,20 +77,20 @@ function postData(url, data) {
       if (json.error) {
         sweetAlert(json.error);
       } else if (json.id) {
-        // alert(json);
         localStorage.setItem('name', json.name);
         localStorage.setItem('token', json.token);
         window.location.href = './request.html';
       } else {
-        modal_2.style.display = 'none';
+        modal.style.display = 'none';
         sweetAlert(json);
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 signupBtn.addEventListener('click', () => {
-  // modal_2.style.display = 'none';
   const name = document.getElementById('signup_name').value;
   if (!name) {
     sweetAlert('Please enter your name.');

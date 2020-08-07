@@ -22,16 +22,13 @@ const saveTest = async (req, res) => {
 };
 
 const helper = async (req) => {
-  const { specId } = req;
-  const { apiId } = req;
-  const { specCheck } = req;
-  const spec = JSON.parse(req.spec_res);
-  const { specTime } = req;
-  const { specCode } = req;
+  const {
+    specId, apiId, specCheck, specTime, specCode, network,
+  } = req;
+  const spec = JSON.parse(req.specRes);
   const resultTime = req.response.time;
   const resultStatus = req.response.status;
   const resultData = req.response.body;
-  const { network } = req;
   const testTime = Date.now();
   let time = '';
   let code = '';
@@ -115,9 +112,9 @@ const helper = async (req) => {
 };
 
 const compare = async (req, res) => {
-  const re = await helper(req.body);
-  if (!re.error) {
-    res.status(200).send(re);
+  const returnResult = await helper(req.body);
+  if (!returnResult.error) {
+    res.status(200).send(returnResult);
   } else {
     res.status(400).send({ error: 'Wrong Request' });
   }

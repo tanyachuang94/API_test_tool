@@ -1,87 +1,82 @@
+<!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>API Test Tool - Test Detail</title>
   <link rel=icon href="./imgs/favicon.ico" sizes="16x16" type="image/png">
   <link rel="stylesheet" href="./css/test.css">
   <link rel="stylesheet" href="./css/user.css">
-  <script src='js/testDetail.js'></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src='./js/user.js' defer></script>
+  <script src='./js/testDetail.js' defer></script>
 </head>
-
 <body>
-  <header>
-    <div class="logo"><a href="index.html"><img src="imgs/logo_api.png" /></a></div>
-    <nav>
-      <div class="item" id="reqPage"><a href="./request.html">Request</a></div>
-      <div class="item current" id="testPage" style="display:none"><a href="./test.html">Test</a></div>
-      <div class="item" id="scrPage" style="display:none"><a href="./script.html">Script</a></div>
-      <div class="item" id="repPage" style="display:none"><a href="./report.html">Report</a></div>
-    </nav>
-    <div class="user">
-      <div id="userIcon" style="display:none"></div>
-      <div id="user" style="display:none"></div>
-      <button id="myBtn"
-        style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px;color: #494949;">Login</button>
-    </div>
-  </header>
-  <main>
-    <div class="view"><br>
-      <div class="content"
-        style="width:70%; padding: 4px; border: 3px dashed; border-radius: 5px; border-color: rgb(110, 155, 145)">
-        <div class="item">Test Case <br>
-          <input id="spec_name" style="width:250px"></input>
-        </div>
-        <div class="item">Method <br>
-          <select id="method">
-            <option value="GET" id="GET">GET</option>
-            <option value="POST" id="POST">POST</option>
-          </select>
-        </div>
-        <div class="item">Check <br>
-          <select id="res_check">
-            <option value="DATA" id="DATA">DATA</option>
-            <option value="TYPE" id="TYPE">TYPE</option>
-          </select>
-        </div>
-        <div class="item">Code status <br>
-          <input id="code" style="width:80px"></input>
-        </div>
-        <div class="item">Response Time(ms) <br>
-          <input id="time" style="width:80px"></input>
-        </div>
-      </div><br>
-      <div class="content">
-        <div id="resStatus"></div>
-      </div><br>
-      <div class="content">
-        <div class="title">Request Header</div>
-        <div class="title">Request Body</div>
-      </div><br>
-      <div class="content">
-        <textarea class="area" id="req_header" style="height: 100px" placeholder="Please input data in JSON format."></textarea>
-        <textarea class="area" id="req_body" style="height: 100px" placeholder="Please input data in JSON format."></textarea>
-      </div><br>
-      <div class="content">
-        <div class="title" id="expected">Expected Response</div>
-        <div class="title" id="actual">Actual Response</div>
-      </div><br>
-      <div class="content">
-        <textarea class="area" id="res_data" style="height: 250px" placeholder="Please input data in JSON format."></textarea>
-        <pre class="area" id="act_data"
-          style="height: 250px; font-size:0.4em; overflow-y:scroll; white-space: pre-wrap"></pre>
-      </div><br>
-      <div class="content" style="font-size: 0.9em; color: rgb(185, 184, 184);">If any update, please Save test before execution.</div>
-      
-      <div class="content">
-        <input class="button" type="submit" value="SAVE" onclick="saveTest()" />
-        <input class="button" type="submit" value="SEND" onclick="sendTest()" />
+  <div id="pageContainer">
+    <header>
+      <a href="./index.html"><img id="logo" src="./imgs/logo_api.png" /></a>
+      <nav>
+        <a id="reqPage" href="./request.html">Request</a>
+        <a id="testPage" style="display:none" href="./test.html">Test</a>
+        <a id="scrPage" style="display:none" href="./script.html">Script</a>
+        <a id="repPage" style="display:none" href="./report.html">Report</a>
+      </nav>
+      <div class="user">
+        <div class="item" id="userIcon" style="display:none"></div>
+        <div class="item" id="user" style="display:none"></div>
+        <button class="item" id="myBtn">Login</button>
       </div>
-    </div>
+    </header>
+  <main><br>
+    <div class="specContainer">
+      <div>Test Case Name<br>
+        <input class="item" id="spec_name"></input>
+      </div>
+      <div>Method <br>
+        <select class="item" id="method">
+          <option value="GET" id="GET">GET</option>
+          <option value="POST" id="POST">POST</option>
+        </select>
+      </div>
+      <div>Check <br>
+        <select class="item" id="res_check">
+          <option value="DATA" id="DATA">DATA</option>
+          <option value="TYPE" id="TYPE">TYPE</option>
+        </select>
+      </div>
+      <div>Code status <br>
+        <input class="item" id="code"></input>
+      </div>
+      <div>Response Time(ms) <br>
+        <input class="item" id="time"></input>
+      </div>
+    </div><br>
+    <div class="content">
+      <div id="resStatus"></div>
+    </div><br>
+    <div class="content">
+      <div class="title">Request Header</div>
+      <div class="title">Request Body</div>
+    </div><br>
+    <div class="content">
+      <textarea class="area" id="req_header" placeholder="Please input data in JSON format."></textarea>
+      <textarea class="area" id="req_body" placeholder="Please input data in JSON format."></textarea>
+    </div><br>
+    <div class="content">
+      <div class="title" id="expected">Expected Response</div>
+      <div class="title" id="actual">Actual Response</div>
+    </div><br>
+    <div class="content">
+      <textarea class="area" id="res_data" placeholder="Please input data in JSON format."></textarea>
+      <pre class="area" id="act_data"></pre>
+    </div><br>
+    <div class="content" style="font-size: 0.9em; color: rgb(185, 184, 184);">If any update, please Save test before execution.</div>
+    <div class="content">
+      <input class="button" type="submit" value="SAVE" onclick="saveTest()" />
+      <input class="button" type="submit" value="SEND" onclick="sendTest()" />
+    </div><br>
   </main>
-  <div id="myModal_2" class="modal_2">
-    <div class="modal-content_2">
+  <div class="modal" id="modal">
+    <div class="modalContent">
       <div class="container">
         <div class="nav signup" id="nav_signup">Sign Up</div>
         <div class="nav login" id="nav_login">Log In</div>
@@ -89,7 +84,7 @@
           <input id="signup_name" class="input" type="text" name="name" placeholder="Your Name"><br>
           <input id="signup_email" class="input" type="email" name="email" placeholder="Your Email Address"><br>
           <input id="signup_password" class="input" type="password" name="password" placeholder="Choose a Password"><br>
-          <button class="btn" id="signupBtn">Create account</button>
+          <button class="btn" id="signupBtn" type="submit" style="padding:auto">Create account</button>
         </div>
         <div class="form login-form" id="login_form">
           <input id="login_email" class="input" type="email" name="email" placeholder="Email"><br>
@@ -99,12 +94,7 @@
       </div>
     </div>
   </div>
+  <footer>&copy; 2020. All rights reserved.</footer>
+</div>
 </body>
-<script src='js/user.js'></script>
-<!-- <footer>
-    <div class="item">
-      &copy; 2020. All rights reserved.
-    </div>
-  </footer> -->
-
 </html>

@@ -1,11 +1,8 @@
 require('dotenv').config();
-const nodemailer = require('nodemailer');
 
 const express = require('express');
 const bodyparser = require('body-parser');
-const crypto = require('crypto');
 
-const hash = crypto.createHash('sha256');
 const { CronJob } = require('cron');
 const fetch = require('node-fetch');
 const cookieParser = require('cookie-parser');
@@ -29,53 +26,61 @@ app.use('/api/',
     require('./server/routes/test_route'),
     require('./server/routes/report_route'),
     require('./server/routes/script_route'),
+    require('./server/routes/user_route'),
   ]);
 
-async function trigger(timer) {
+function auto(num) {
   const today = new Date();
-  function auto(num) {
-    return new Promise((resolve) => {
-      db.query('SELECT * FROM script WHERE start_date <= ? AND end_date >= ? AND start_time = ?  ', [today, today, num], (err, result) => {
-        if (err) throw err;
-        resolve(result);
-      });
+  return new Promise((resolve) => {
+    db.query('SELECT * FROM script WHERE start_date <= ? AND end_date >= ? AND start_time = ?  ', [today, today, num], (err, result) => {
+      if (err) throw err;
+      resolve(result);
     });
-  }
-  const spec = await auto(timer);
-
-  for (let i = 0; i < spec.length; i += 1) {
-    const req = {};
-    req.body = {};
-    const data = {};
-    const testDetail = await fetch(`http://localhost:7000/api/test_detail?id=${spec[i].spec_id}`) // 同時拿api url和spec test
-      .then((res) => res.json())
-      .then((json) => {
-        data.protocol = json[0].protocol;
-        data.domain = json[0].domain;
-        data.endpoint = json[0].endpoint;
-        data.method = json[0].method;
-        data.headers = json[0].req_header;
-        data.body = json[0].req_body;
-        req.body.apiId = json[0].api_id;
-        req.body.specCheck = json[0].res_check;
-        req.body.spec_res = json[0].res_data;
-        req.body.specCode = json[0].res_code;
-        req.body.specTime = json[0].res_time;
-        return data;
-      });
-
-    // const network = navigator.connection.effectiveType;
-    const resultDetail = await fetch('http://localhost:7000/api/request', {
-      body: JSON.stringify(testDetail),
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-    })
-      .then((res) => res.json())
-      .then((json) => json);
-    req.body.specId = spec[i].spec_id;
-    req.body.response = resultDetail;
-    req.body.network = '4g'; // Fix get network traffic
-    compare.helper(req.body);
+  });
+}
+async function trigger(timer) {
+  try {
+    const spec = await auto(timer);
+    for (let i = 0; i < spec.length; i += 1) {
+      const req = {};
+      req.body = {};
+      const data = {};
+      const testDetail = await fetch(`http://localhost:7000/api/test_detail?id=${spec[i].spec_id}`) // 同時拿api url和spec test
+        .then((res) => res.json())
+        .then((json) => {
+          data.protocol = json[0].protocol;
+          data.domain = json[0].domain;
+          data.endpoint = json[0].endpoint;
+          data.method = json[0].method;
+          data.headers = json[0].req_header;
+          data.body = json[0].req_body;
+          req.body.apiId = json[0].api_id;
+          req.body.specCheck = json[0].res_check;
+          req.body.specRes = json[0].res_data;
+          req.body.specCode = json[0].res_code;
+          req.body.specTime = json[0].res_time;
+          return data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      const resultDetail = await fetch('http://localhost:7000/api/request', {
+        body: JSON.stringify(testDetail),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+      })
+        .then((res) => res.json())
+        .then((json) => json)
+        .catch((err) => {
+          console.log(err);
+        });
+      req.body.specId = spec[i].spec_id;
+      req.body.response = resultDetail;
+      req.body.network = '4g'; // Network status on EC2
+      compare.helper(req.body);
+    }
+  } catch (error) {
+    return error;
   }
 }
 
@@ -146,9 +151,7 @@ app.post('/api/readapi', async (req, res) => { // Fix : sort api , cannot find t
   });
 });
 app.post('/api/addspec', async (req, res) => {
-  const { protocol } = req.body;
-  const { domain } = req.body;
-  const { endpoint } = req.body;
+  const { protocol, domain, endpoint } = req.body;
   const specName = req.body.test;
   let api = '';
   async function addApi() {
@@ -175,134 +178,6 @@ app.post('/api/addspec', async (req, res) => {
       res.send(JSON.stringify(specId));
     });
   });
-});
-
-function hashData(data) { // 加密
-  const hash = crypto.createHash('sha256');
-  hash.update(data);
-  hashResult = hash.digest('hex');
-  return (hashResult);
-}
-
-function findEmail(email) {
-  return new Promise((resolve) => {
-    db.query('SELECT * FROM user WHERE email = ?', [email], (err, result) => {
-      if (err) throw err;
-      resolve(result);
-    });
-  });
-}
-function sendEmail(email, name, hashToken) {
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    secureConnection: false, // SSL方式,防止竊取訊息
-    auth: {
-      user: process.env.EMAIL_ACCOUNT,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-  const mailOptions = {
-    from: 'API Test Tool',
-    to: email,
-    subject: 'Thanks for your registration.',
-    text: `
-    Hi ${name}
-      Please activate your account by clicking https://api_test.tanyachuang.site/api/verify?token=${hashToken}
-
-    Let's try it!
-
-    Sample data #1
-    Method: GET
-    Protocol: HTTPS
-    Domain: tanyachuang.site
-    Endpoint: api/1.0/marketing/campaigns
-
-    Sample data #2
-    Method: POST
-    Protocol: HTTPS
-    Domain: api.appworks-school.tw
-    Endpoint: api/1.0/user/signup
-    Headers: {"Content-Type":"application/json"}
-    Body: {"name":"test","email":"test@test.com","password":"test"}
-    `,
-  };
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log(`Email sent: ${info.response}`);
-    }
-  });
-}
-
-app.post('/api/signup', async (req, res) => {
-  const { name } = req.body;
-  const { email } = req.body;
-  const { password } = req.body;
-  const expired = 3600; // Fix check token
-  try {
-    const result = await findEmail(email);
-    if (result.length !== 0) { // Fix resend verify email
-      res.status(403).send({ error: 'Email Already Exists. ' });
-    } else {
-      const token = email + Date();
-      const hashToken = hashData(token);
-      const hashPW = hashData(password);
-      const post = {
-        email, password: hashPW, name, token: hashToken, status: 0,
-      };
-      db.query('INSERT INTO user SET ?', post, (err, result) => {
-        if (err) throw err;
-        // id = result.insertId;
-        // res.send({
-        //   id: result.insertId,
-        //   name: name,
-        //   token: hashToken,
-        // });
-      });
-      sendEmail(email, name, hashToken);
-      res.status(400).send(JSON.stringify('Confirm email sent. Please check your email and activate the account.'));
-    }
-  } catch (error) {
-    return error;
-  }
-});
-
-app.get('/api/verify', async (req, res) => {
-  const signupToken = req.query.token;
-  db.query('UPDATE user SET status = 1 WHERE token = ?', signupToken, (err, result) => {
-    if (err) throw err;
-    res.redirect('../index.html');
-  });
-});
-
-app.post('/api/login', async (req, res) => {
-  const { email } = req.body;
-  const { password } = req.body;
-  try {
-    const result = await findEmail(email);
-    const token = email + Date();
-    const hashToken = await hashData(token); // Fix check token valid and update token in db
-    const hashPW = await hashData(password);
-    if (result.length == 0) {
-      res.status(400).send({ error: 'Email does not exist.' });
-    } else if (result[0].status != 1) {
-      res.status(400).send({ error: 'Account is inactive.' });
-    } else if (hashPW != result[0].password) {
-      res.status(400).send({ error: 'Incorrect password.' });
-    } else {
-      res.send({
-        id: result[0].id,
-        name: result[0].name,
-        token: hashToken,
-      });
-    }
-  } catch (error) {
-    return error;
-  }
 });
 
 // Error handling

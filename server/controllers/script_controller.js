@@ -20,14 +20,12 @@ const saveScript = async (req, res) => {
   const scriptId = req.query.id;
   const data = req.body;
   if (scriptId == 'new') {
-    
     const newId = await Script.addScript(data);
     res.send(JSON.stringify(newId));
-  } else{
-    const updateScript = await Script.updateScript(scriptId, data);
-    res.send(JSON.stringify('ok'));
+  } else {
+    await Script.updateScript(scriptId, data);
+    res.end();
   }
-  
 };
 
 module.exports = {

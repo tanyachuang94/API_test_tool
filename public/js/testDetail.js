@@ -1,8 +1,9 @@
-const getURL = location.href; // 用location.href取得網址，並存入變數
-const url = new URL(getURL); // 將網址 (字串轉成URL)
-const getID = url.searchParams.get('id'); // 回傳url的id參數 (testId)
+document.getElementById('testPage').classList.add('current');
+
+const getURL = location.href;
+const url = new URL(getURL);
+const getID = url.searchParams.get('id');
 let expected = '';
-// const actual = '';
 let specCheck = '';
 let specTime = 0;
 let specCode = 0;
@@ -66,7 +67,7 @@ async function sendTest() {
     specId: getID,
     apiId,
     specCheck,
-    spec_res: expected,
+    specRes: expected,
     specCode,
     specTime,
     response: resultDetail,
@@ -109,11 +110,14 @@ async function saveTest() {
     method: 'POST',
   })
     .then((result) =>　result.json())
-    .then((json) => { // reload page after saving
+    .then((json) => {
       if (json.result == 'save') {
         window.location = `test_detail.html?id=${getID}`;
       } else {
         sweetAlert(json.result);
       }
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }

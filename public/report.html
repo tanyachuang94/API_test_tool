@@ -1,5 +1,5 @@
+<!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>API Test Tool - Report</title>
@@ -8,53 +8,51 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/report.css">
   <link rel="stylesheet" href="./css/user.css">
+  <script src='./js/report.js' defer></script>
+  <script src='./js/user.js' defer></script>
 </head>
-
 <body>
+<div id="pageContainer">
   <header>
-    <div class="logo"><a href="index.html"><img src="imgs/logo_api.png" /></a></div>
+    <a href="./index.html"><img id="logo" src="./imgs/logo_api.png" /></a>
     <nav>
-      <div class="item" id="reqPage"><a href="./request.html">Request</a></div>
-      <div class="item" id="testPage" style="display:none"><a href="./test.html">Test</a></div>
-      <div class="item" id="scrPage" style="display:none"><a href="./script.html">Script</a></div>
-      <div class="item" id="repPage" style="display:none"><a href="./report.html">Report</a></div>
+      <a id="reqPage" href="./request.html">Request</a>
+      <a id="testPage" style="display:none" href="./test.html">Test</a>
+      <a id="scrPage" style="display:none" href="./script.html">Script</a>
+      <a id="repPage" style="display:none" href="./report.html">Report</a>
     </nav>
     <div class="user">
-      <div id="userIcon" style="display:none"></div>
-      <div id="user" style="display:none"></div>
-      <button id="myBtn"
-        style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px;color: #494949;">Login</button>
+      <div class="item" id="userIcon" style="display:none"></div>
+      <div class="item" id="user" style="display:none"></div>
+      <button class="item" id="myBtn" >Login</button>
     </div>
   </header>
-  <main>
-    <div class="view">
-      <div class="content">
-        <div class="item">Sort by &nbsp;
-          <select name="sort" id="sort" onchange="sortby(this)">
-            <option value="test_time">Test Time</option>
-            <option value="test_result">Result</option>
-            <option value="spec_name">Name</option>
-          </select>
-        </div>
-        <div class="item">
-          <table class="table table-hover">
-            <thead>
-              <tr id="table">
-                <th scope="col" style="width:55%">Test Case Name</th>
-                <th scope="col" style="width:17%">Test Result</th>
-                <th scope="col">Test Time</th>
-              </tr>
-            </thead>
-            <tbody id=data>
-            </tbody>
-          </table>
-        </div>
+  <main><br>
+    <div class="content">
+      <div class="item">Sort by &nbsp;
+        <select name="sort" id="sort" onchange="sortby(this)">
+          <option value="test_time">Test Time</option>
+          <option value="test_result">Result</option>
+          <option value="spec_name">Name</option>
+        </select>
+      </div><br><br>
+      <div class="item">
+        <table class="table table-hover">
+          <thead>
+            <tr id="table">
+              <th scope="col" style="width:55%">Test Case Name</th>
+              <th scope="col" style="width:17%">Test Result</th>
+              <th scope="col">Test Time</th>
+            </tr>
+          </thead>
+          <tbody id=data>
+          </tbody>
+        </table>
       </div>
-
     </div>
   </main>
-  <div id="myModal_2" class="modal_2">
-    <div class="modal-content_2">
+  <div class="modal" id="modal">
+    <div class="modalContent">
       <div class="container">
         <div class="nav signup" id="nav_signup">Sign Up</div>
         <div class="nav login" id="nav_login">Log In</div>
@@ -62,7 +60,7 @@
           <input id="signup_name" class="input" type="text" name="name" placeholder="Your Name"><br>
           <input id="signup_email" class="input" type="email" name="email" placeholder="Your Email Address"><br>
           <input id="signup_password" class="input" type="password" name="password" placeholder="Choose a Password"><br>
-          <button class="btn" id="signupBtn">Create account</button>
+          <button class="btn" id="signupBtn" type="submit" style="padding:auto">Create account</button>
         </div>
         <div class="form login-form" id="login_form">
           <input id="login_email" class="input" type="email" name="email" placeholder="Email"><br>
@@ -72,13 +70,7 @@
       </div>
     </div>
   </div>
+  <footer>&copy; 2020. All rights reserved.</footer>
+</div>
 </body>
-<!-- <footer>
-    <div class="item">
-      &copy; 2020. All rights reserved.
-    </div>
-  </footer> -->
-<script src='js/report.js'></script>
-<script src='js/user.js'></script>
-
 </html>

@@ -9,7 +9,6 @@ function addScript() {
   document.getElementById('script').setAttribute('style', 'display: block; font-size:0.8em; width:300px; height:30px; margin: 7px');
   document.getElementById('add').setAttribute('style', 'display: none');
   const today = new Date();
-  console.log(today);
   startDate.valueAsDate = today;
   Date.prototype.addDays = function (days) { // add 10 days to current date
     const date = new Date(this.valueOf());
@@ -25,10 +24,12 @@ fetch('/api/specs')
     for (let i = 0; i < json.length; i += 1) {
       const opt = document.createElement('option');
       opt.setAttribute('value', json[i].id);
-      // opt.setAttribute('id', json.spec_name[i]);
       opt.innerHTML = json[i].spec_name;
       document.getElementById('spec1').appendChild(opt);
     }
+  })
+  .catch((err) => {
+    console.log(err);
   });
 function load(script) {
   fetch(`/api/script?id=${script}`)
@@ -38,7 +39,9 @@ function load(script) {
       startDate.setAttribute('value', json.start_date);
       endDate.setAttribute('value', json.end_date);
       document.getElementById('startTime').value = json.start_time;
-      // document.getElementById('frequency').value = json.frequency;
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
 function readScript(selectObject) {
@@ -52,10 +55,12 @@ fetch('/api/scrpits')
       if (i == 0) { load(json[0].id); }
       const opt = document.createElement('option');
       opt.setAttribute('value', json[i].id);
-      // opt.setAttribute('id', json.spec_name[i]);
       opt.innerHTML = json[i].script_name;
       document.getElementById('scriptList').appendChild(opt);
     }
+  })
+  .catch((err) => {
+    console.log(err);
   });
 
 function saveScript() {
@@ -64,7 +69,6 @@ function saveScript() {
   data.start_date = startDate.value;
   data.end_date = endDate.value;
   data.start_time = document.getElementById('startTime').value;
-  // data.frequency = document.getElementById('frequency').value;
   if (scriptList == 'new') {
     data.script_name = document.getElementById('script').value;
   } else {
@@ -79,5 +83,8 @@ function saveScript() {
     .then((json) => {
       scriptList = '';
       window.location.href = './script.html';
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }

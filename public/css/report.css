@@ -1,14 +1,13 @@
 @import "base.css";
 
-main>.view>.content{
-  display: flex;
-  flex-wrap: wrap;flex-direction: row;
+.content{
+  width:80%; display: flex; margin: 0px auto;
+  flex-wrap: wrap;flex-direction: column;
   justify-content: center;
 }
-main>.view>.content>.item{
-  margin: 20px; width:70%;
+.content>.item{
+  margin: 20px; width:70%; margin: 0px auto;
 }
 select{
-  font-size:0.8em;
   width:130px; height:30px;
 }

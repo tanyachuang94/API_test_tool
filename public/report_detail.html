@@ -1,51 +1,47 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>API Test Tool - Test Detail</title>
   <link rel=icon href="./imgs/favicon.ico" sizes="16x16" type="image/png">
   <link rel="stylesheet" href="./css/test.css">
   <link rel="stylesheet" href="./css/user.css">
-  <!-- <script src='js/testDetail.js'></script> -->
-  
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src='./js/user.js' defer></script>
+  <script src='./js/report_detail.js' defer></script>
 </head>
-
 <body>
-  <header>
-    <div class="logo"><a href="index.html"><img src="imgs/logo_api.png" /></a></div>
-    <nav>
-      <div class="item" id="reqPage"><a href="./request.html">Request</a></div>
-      <div class="item current" id="testPage" style="display:none"><a href="./test.html">Test</a></div>
-      <div class="item" id="scrPage" style="display:none"><a href="./script.html">Script</a></div>
-      <div class="item" id="repPage" style="display:none"><a href="./report.html">Report</a></div>
-    </nav>
-    <div class="user">
-      <div id="userIcon" style="display:none"></div>
-      <div id="user" style="display:none"></div>
-      <button id="myBtn"
-        style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px;color: #494949;">Login</button>
-    </div>
-  </header>
-  <main>
-    <div class="view"><br>
-      <div class="content"
-        style="width:70%; padding: 4px; border: 3px dashed; border-radius: 5px; border-color: rgb(110, 155, 145)">
-        <div class="item">Test Case <br>
-          <div id="spec_name" style="width:300px; height: 30px; margin-top: 5px; line-height: 30px; border: solid grey 1px; border-radius:2px;"></div>
+  <div id="pageContainer">
+    <header>
+      <a href="./index.html"><img id="logo" src="./imgs/logo_api.png" /></a>
+      <nav>
+        <a id="reqPage" href="./request.html">Request</a>
+        <a id="testPage" style="display:none" href="./test.html">Test</a>
+        <a id="scrPage" style="display:none" href="./script.html">Script</a>
+        <a id="repPage" style="display:none" href="./report.html">Report</a>
+      </nav>
+      <div class="user">
+        <div class="item" id="userIcon" style="display:none"></div>
+        <div class="item" id="user" style="display:none"></div>
+        <button class="item" id="myBtn">Login</button>
+      </div>
+    </header>
+    <main><br>
+      <div class="specContainer">
+        <div>Test Case Name<br>
+          <div class="item" id="spec_name"></div>
         </div>
-        <div class="item">Method <br>
-          <div id="method" style="width:70px; height: 30px; margin-top: 5px; line-height: 30px; border: solid grey 1px; border-radius:2px;"></div>
+        <div>Method <br>
+          <div class="item" id="method"></div>
         </div>
-        <div class="item">Check <br>
-          <div id="res_check" style="width:70px; height: 30px; margin-top: 5px; line-height: 30px; border: solid grey 1px; border-radius:2px;"></div>
+        <div>Check <br>
+          <div class="item" id="res_check"></div>
         </div>
-        <div class="item">Code status <br>
-          <div id="code" style="width:80px; height: 30px; margin-top: 5px; line-height: 30px; border: solid grey 1px; border-radius:2px;"></div>
+        <div>Code status <br>
+          <div class="item" id="code"></div>
         </div>
-        <div class="item">Response Time(ms) <br>
-          <div id="time" style="width:80px; height: 30px; margin-top: 5px; line-height: 30px; border: solid grey 1px; border-radius:2px;"></div>
+        <div>Response Time(ms) <br>
+          <div class="item" id="time"></div>
         </div>
       </div><br>
       <div class="content">
@@ -56,90 +52,38 @@
         <div class="title">Request Body</div>
       </div><br>
       <div class="content">
-        <pre class="area" id="req_header" style="height: 100px" ></pre>
-        <pre class="area" id="req_body" style="height: 100px"></pre>
+        <pre class="area" id="req_header"></pre>
+        <pre class="area" id="req_body"></pre>
       </div><br>
       <div class="content">
         <div class="title" id="expected">Expected Response</div>
         <div class="title" id="actual" style="color:green">Actual Response</div>
       </div><br>
       <div class="content">
-        <pre class="area" id="res_data" style="height: 250px"></pre>
-        <pre class="area" id="act_data" style="height: 250px"></pre>
+        <pre class="area" id="res_data"></pre>
+        <pre class="area" id="act_data" ></pre>
       </div><br>
-    </div>
-  </main>
-  <div id="myModal_2" class="modal_2">
-    <div class="modal-content_2">
-      <div class="container">
-        <div class="nav signup" id="nav_signup">Sign Up</div>
-        <div class="nav login" id="nav_login">Log In</div>
-        <div class="form signup-form" id="signup_form">
-          <input id="signup_name" class="input" type="text" name="name" placeholder="Your Name"><br>
-          <input id="signup_email" class="input" type="email" name="email" placeholder="Your Email Address"><br>
-          <input id="signup_password" class="input" type="password" name="password" placeholder="Choose a Password"><br>
-          <button class="btn" id="signupBtn">Create account</button>
-        </div>
-        <div class="form login-form" id="login_form">
-          <input id="login_email" class="input" type="email" name="email" placeholder="Email"><br>
-          <input id="login_password" class="input" type="password" name="password" placeholder="Password"><br>
-          <button class="btn" id="loginBtn">log in</button>
+    </main>
+    <div class="modal" id="modal">
+      <div class="modalContent">
+        <div class="container">
+          <div class="nav signup" id="nav_signup">Sign Up</div>
+          <div class="nav login" id="nav_login">Log In</div>
+          <div class="form signup-form" id="signup_form">
+            <input id="signup_name" class="input" type="text" name="name" placeholder="Your Name"><br>
+            <input id="signup_email" class="input" type="email" name="email" placeholder="Your Email Address"><br>
+            <input id="signup_password" class="input" type="password" name="password" placeholder="Choose a Password"><br>
+            <button class="btn" id="signupBtn" type="submit" style="padding:auto">Create account</button>
+          </div>
+          <div class="form login-form" id="login_form">
+            <input id="login_email" class="input" type="email" name="email" placeholder="Email"><br>
+            <input id="login_password" class="input" type="password" name="password" placeholder="Password"><br>
+            <button class="btn" id="loginBtn">log in</button>
+          </div>
         </div>
       </div>
     </div>
+    <footer>&copy; 2020. All rights reserved.</footer>
   </div>
 </body>
-<script src='js/user.js'></script>
-<script>
-  const getURL = location.href; 
-  const url = new URL(getURL);
-  const getID = url.searchParams.get('id'); 
-  fetch(`/api/report_detail?id=${getID}`) 
-  .then((res) => res.json())
-  .then((json) => {
-    let result = json.test_result;
-    let res_code = json.test_res_code;
-    let res_time = json.test_res_time;
-    console.log(json)
-    document.getElementById('method').innerHTML = json.method;
-    document.getElementById('res_check').innerHTML = json.res_check;
-    document.getElementById('spec_name').innerHTML = json.spec_name;
-    document.getElementById('req_header').innerHTML = json.req_header;
-    document.getElementById('req_body').innerHTML = json.req_body;
-    document.getElementById('res_data').innerHTML = JSON.stringify(JSON.parse(json.res_data), null, 2);
-    document.getElementById('act_data').innerHTML = JSON.stringify(JSON.parse(json.test_res_body), null, 2);
-    document.getElementById('code').innerHTML = json.res_code;
-    document.getElementById('time').innerHTML = json.res_time;
-    expected = json.res_data;
-    specCheck = json.res_check;
-    specTime = json.res_time;
-    specCode = json.res_code;
-    
-    if (result == "Fail"){result = `<font color="red">Fail</font>`}
-    else {result = `<font color="green">Pass</font>`}
-    var fails = JSON.parse(json.test_fails);  //string轉array
-    if (fails){
-      
-      for (let i=0; i<fails.length; i+=1){
-      if (fails[i] == 'time'){res_time = '<font color="red">'+ res_time + '</font>'}
-      if (fails[i] == 'code'){res_code = '<font color="red">'+ res_code + '</font>'}
-      if (fails[i] == 'data'){document.getElementById('actual').setAttribute('style', 'color:red')}
-    }
-    }
-   
-    document.getElementById('resStatus').innerHTML = `Test Result : ${result} / Code Status : ${res_code} / Time : ${res_time} (ms)` + ` / Network : ${json.network}`;
-
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-    
-
-</script>
-<!-- <footer>
-    <div class="item">
-      &copy; 2020. All rights reserved.
-    </div>
-  </footer> -->
-
 </html>

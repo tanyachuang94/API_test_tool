@@ -48,12 +48,6 @@ function send() {
     })
       .then((result) => {
         if (result != undefined) { // result is response status
-          // const script = document.createElement('script');
-          // script.src = file;
-          // script.type = 'text/javascript';
-          // script.defer = true;
-          // document.getElementById('view1').appendChild(script);
-
           const line = document.getElementById('line');
           line.style.display = 'block';
           const divView2 = document.createElement('div');
@@ -73,11 +67,8 @@ function send() {
           divResStatus.setAttribute('id', 'resStatus');
           divRes.parentNode.insertBefore(divResStatus, divRes.nextSibling);
 
-          const divResData = document.createElement('pre');
-          divResData.setAttribute('class', 'content');
-          divResData.setAttribute('id', 'act_data');
-          divResData.setAttribute('style', 'border:solid 1px grey; width:70%; height:300px; overflow-y:scroll; white-space: pre-wrap; text-align: left;border-radius: 5px');
-          divResStatus.parentNode.insertBefore(divResData, divResStatus.nextSibling);
+          const divResData = document.getElementById('act_data');
+          divResData.setAttribute('style', 'display: block; border:solid 1px grey; width:70%; height:300px; overflow-y:scroll; white-space: pre-wrap; text-align: left;border-radius: 5px');
         }
         return result.json();
       })
@@ -85,6 +76,10 @@ function send() {
         document.getElementById('resStatus').innerHTML = `  Code Status : ${JSON.stringify(json.status)} / Time : ${JSON.stringify(json.time)} ms / Network : ${navigator.connection.effectiveType}<br><br>`;
         document.getElementById('act_data').innerHTML = JSON.stringify(json.body, null, 2);
         document.getElementById('clear').style.display = 'block';
+        document.getElementsByClassName('foot').style.display = 'none';
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 }

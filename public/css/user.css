@@ -1,5 +1,5 @@
 /* The Modal (background) */
-.modal_2 {
+.modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -17,7 +17,7 @@
 }
 
 /* Modal Content */
-.modal-content_2 {
+.modalContent {
   position: fixed;
   background-color: lightgray;
   top: 15%;
@@ -47,20 +47,24 @@
   cursor: pointer;
 }
 
-.modal-header_2 {
+.modal-header {
   padding: 2px 16px;
   background-color: #5cb85c;
   color: white;
 }
 
-.modal-body_2 {padding: 2px 16px;}
+.modal-body {padding: 2px 16px;}
 
-.modal-footer_2 {
+.modal-footer {
   padding: 2px 16px;
   background-color: #5cb85c;
   color: white;
 }
-
+#myBtn{
+  height: 30px; padding: 6px 6px; 
+  color: white; font-size: 0.9em; background-color:#8FC5B9;
+  border: solid 1px; border-color: white; border-radius: 6px
+}
 /* Add Animation */
 @-webkit-keyframes slideIn {
   from {opacity: 0} 
@@ -132,8 +136,8 @@
  
  .btn {
    border: none;
-   width: 100%;
-   background: #34b3a0;
+   width: 60%;
+   background: #36aa99;
    height: 50px;
    text-align: center;
    line-height: 50px;
@@ -143,4 +147,5 @@
    letter-spacing: 1px;
    cursor: pointer;
    margin-bottom: 25px;
+   margin-left: 20%;
  }

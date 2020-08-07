@@ -10,7 +10,7 @@ const sendReq = async (req, res) => {
   data.method = req.body.method;
   if (req.body.headers != null || req.body.headers != undefined) {
     const Str = req.body.headers.replace(/'/g, '"'); // replace '
-    data.headers = JSON.parse(Str); // Fix to check when json parse fail
+    data.headers = JSON.parse(Str);
   }
   if (req.body.body != null || req.body.body != undefined) {
     data.body = req.body.body;
@@ -19,12 +19,10 @@ const sendReq = async (req, res) => {
   const start = Date.now();
   const result = await fetch(url, data)
     .then((response) => {
-      console.log(response);
       if (response.status == 404) {
         detail.time = response.timeout;
         detail.status = response.status;
         return `${response.url}  ${response.statusText}`;
-        // fix server 404 error, restart app.js (wrong method or url)
       }
       const end = Date.now() - start;
       detail.time = end;

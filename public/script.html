@@ -1,101 +1,87 @@
+<!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>API Test Tool - Test</title>
   <link rel=icon href="./imgs/favicon.ico" sizes="16x16" type="image/png">
   <link rel="stylesheet" href="./css/script.css">
   <link rel="stylesheet" href="./css/user.css">
+  <script src='./js/user.js' defer></script>
+  <script src='./js/script.js' defer></script>
 </head>
-
 <body>
-  <header>
-    <div class="logo"><a href="index.html"><img src="imgs/logo_api.png" /></a></div>
-    <nav>
-      <div class="item" id="reqPage"><a href="./request.html">Request</a></div>
-      <div class="item" id="testPage" style="display:none"><a href="./test.html">Test</a></div>
-      <div class="item" id="scrPage" style="display:none"><a href="./script.html">Script</a></div>
-      <div class="item" id="repPage" style="display:none"><a href="./report.html">Report</a></div>
-    </nav>
-    <div class="user">
-      <div id="userIcon" style="display:none"></div>
-      <div id="user" style="display:none"></div>
-      <button id="myBtn"
-        style="border: solid 1px #494949; padding: 6px 6px; border-radius:6px;color: #494949;">Login</button>
-    </div>
-  </header>
-  <main>
-    <div class="view" id="view"><br>
-      <div class="title">Script Name
-        <select name="scriptList" id="scriptList" onchange="readScript(this)"></select>
-        <input name="script" id="script" style="display: none" />
-        <input class="button" id="add" type="submit" value="CREATE" onclick="addScript()" />
-        <!-- <input class="button" type="submit" value="READ" onclick="readScript()" /><br> -->
+  <div id="pageContainer">
+    <header>
+      <a href="./index.html"><img id="logo" src="./imgs/logo_api.png" /></a>
+      <nav>
+        <a id="reqPage" href="./request.html">Request</a>
+        <a id="testPage" style="display:none" href="./test.html">Test</a>
+        <a id="scrPage" style="display:none" href="./script.html">Script</a>
+        <a id="repPage" style="display:none" href="./report.html">Report</a>
+      </nav>
+      <div class="user">
+        <div class="item" id="userIcon" style="display:none"></div>
+        <div class="item" id="user" style="display:none"></div>
+        <button class="item" id="myBtn">Login</button>
       </div>
-      <div class="title">
-        <div class="item">Test Case&nbsp;</div>
-        <div class="item">
-          <select name="spec1" id="spec1"></select>
-          <!-- <input type="image" name="remove_Btn" id="remove_Btn" img src="./imgs/add.png" onClick="" > -->
-          <br>
-          <!-- <select name="spec2" id="spec2"></select> -->
-        </div><br>
-      </div>
-      <div class="title">
-        <div class="item">Start Date &nbsp;&nbsp;&nbsp;&nbsp;<input id="startDate" type="date"
-            style="text-align: center;" />
-        </div>&nbsp;&nbsp;&nbsp;
-        <div class="item">End Date &nbsp;&nbsp;&nbsp;&nbsp;<input id="endDate" type="date"
-            style="text-align: center;" />
+    </header>
+    <main><br>
+      <div class="view" id="view"><br>
+        <div class="title">Script Name
+          <select name="scriptList" id="scriptList" onchange="readScript(this)"></select>
+          <input name="script" id="script" style="display: none" />
+          <input class="button" id="add" type="submit" value="CREATE" onclick="addScript()" />
+          <!-- <input class="button" type="submit" value="READ" onclick="readScript()" /><br> -->
+        </div>
+        <div class="title">
+          <div class="item">Test Case&nbsp;</div>
+          <div class="item">
+            <select name="spec1" id="spec1"></select>
+            <!-- <input type="image" name="remove_Btn" id="remove_Btn" img src="./imgs/add.png" onClick="" > -->
+            <br>
+            <!-- <select name="spec2" id="spec2"></select> -->
+          </div><br>
+        </div>
+        <div class="title">
+          <div class="item">Start Date &nbsp;&nbsp;&nbsp;&nbsp;<input id="startDate" type="date"
+              style="text-align: center;" />
+          </div>&nbsp;&nbsp;&nbsp;
+          <div class="item">End Date &nbsp;&nbsp;&nbsp;&nbsp;<input id="endDate" type="date"
+              style="text-align: center;" />
+          </div>
+        </div>
+        <div class="title">
+          <div class="item">Start Time &nbsp;
+            <select name="startTime" id="startTime" style="width:34%">
+              <option value="01">1:00</option>
+              <option value="13">13:00</option>
+            </select>
+          </div>&nbsp;
+          <div class="item"><input class="button" id="startTime" type="submit" value="SAVE" onclick="saveScript()" />
+          </div>
         </div>
       </div>
-      <div class="title">
-        <div class="item">Start Time &nbsp;
-          <select name="startTime" id="startTime" style="width:34%">
-            <option value="01">1:00</option>
-            <option value="13">13:00</option>
-          </select>
-          <!-- <input id="startTime" type="time" /> -->
-        </div>&nbsp;
-        <!-- <div class="item">Frequency
-          <select name="frequency" id="frequency" style="width: auto; height: 22px;">
-            <option value="1">1</option>
-            <option value="24">24</option>
-          </select>hrs.
-        </div>&nbsp;&nbsp;&nbsp; -->
-        <div class="item"><input class="button" id="startTime" type="submit" value="SAVE" onclick="saveScript()" />
-        </div>
-      </div>
-
-    </div>
-  </main>
-  <div id="myModal_2" class="modal_2">
-    <div class="modal-content_2">
-      <div class="container">
-        <div class="nav signup" id="nav_signup">Sign Up</div>
-        <div class="nav login" id="nav_login">Log In</div>
-        <div class="form signup-form" id="signup_form">
-          <input id="signup_name" class="input" type="text" name="name" placeholder="Your Name"><br>
-          <input id="signup_email" class="input" type="email" name="email" placeholder="Your Email Address"><br>
-          <input id="signup_password" class="input" type="password" name="password" placeholder="Choose a Password"><br>
-          <button class="btn" id="signupBtn">Create account</button>
-        </div>
-        <div class="form login-form" id="login_form">
-          <input id="login_email" class="input" type="email" name="email" placeholder="Email"><br>
-          <input id="login_password" class="input" type="password" name="password" placeholder="Password"><br>
-          <button class="btn" id="loginBtn">log in</button>
+    </main>
+    <div class="modal" id="modal">
+      <div class="modalContent">
+        <div class="container">
+          <div class="nav signup" id="nav_signup">Sign Up</div>
+          <div class="nav login" id="nav_login">Log In</div>
+          <div class="form signup-form" id="signup_form">
+            <input id="signup_name" class="input" type="text" name="name" placeholder="Your Name"><br>
+            <input id="signup_email" class="input" type="email" name="email" placeholder="Your Email Address"><br>
+            <input id="signup_password" class="input" type="password" name="password" placeholder="Choose a Password"><br>
+            <button class="btn" id="signupBtn" type="submit" style="padding:auto">Create account</button>
+          </div>
+          <div class="form login-form" id="login_form">
+            <input id="login_email" class="input" type="email" name="email" placeholder="Email"><br>
+            <input id="login_password" class="input" type="password" name="password" placeholder="Password"><br>
+            <button class="btn" id="loginBtn">log in</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <footer>&copy; 2020. All rights reserved.</footer>
 </body>
-<!-- <footer>
-  <div class="item">
-    &copy; 2020. All rights reserved.
-  </div>
-</footer> -->
-<!-- <script src='js/test.js'></script> -->
-<script src='js/user.js'></script>
-<script src='js/script.js'></script>
-
 </html>

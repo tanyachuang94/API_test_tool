@@ -15,10 +15,7 @@ function load() {
         const aTest = document.createElement('a');
         aTest.setAttribute('href', `report_detail.html?id=${json[i].id}`);
         td1.appendChild(aTest);
-        // divApi.parentNode.insertBefore(aApi, divApi.nextSibling)
         aTest.innerHTML = json[i].spec_name;
-
-        // td1.innerHTML = `<a href="report_detail.html?id=${json[i].id}>${json[i].spec_name}</a>`;
         const td2 = document.createElement('td');
         td2.setAttribute('align', 'center');
         tr.appendChild(td2);
@@ -34,6 +31,9 @@ function load() {
         tr.appendChild(td3);
         td3.innerHTML = json[i].test_time;
       }
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
 load();

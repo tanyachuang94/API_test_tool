@@ -1,31 +1,28 @@
 @import "base.css";
 .schemes{
-  display: flex;
-  flex-wrap: wrap;flex-direction: row;
-  justify-content: center; 
-  margin: 15px;
+  width:60%; margin:15px auto;
+  display: flex; flex-wrap: wrap;flex-direction: row;
+  justify-content: space-evenly; 
 }
-main>.view>.schemes>.item{
-  margin: 5px;
+.schemes .item{
+  border: solid grey 1px; border-radius:2px;
+  margin-top: 5px; padding: 0px 0px; padding-left: 5px;
 }
-.url{
+#domain, #endpoint{
   font-size:0.8em;
-  width: 300px; height:30px; 
+  width: 250px; 
 }
 select{
-  font-size:0.8em;
-  width:80px; height:30px;
+  width: 80px;
 }
-main>.view>.tab, .content{
-  display: flex;margin:0px auto;width:62%;
-  flex-wrap: wrap;flex-direction: row;
+.content{
+  display: flex; flex-wrap: wrap;flex-direction: row;
   justify-content: center; 
-  /* align-items: flex-end; */
 }
-main>.view>.tab>.item{
+.content>.tab{
   text-align:center; width:90px;  
 }
-main>.view>.tab>.item:hover{
+.content>.tab:hover{
   cursor: pointer;      
 }
 .text{
