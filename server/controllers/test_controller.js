@@ -22,6 +22,7 @@ const saveTest = async (req, res) => {
 };
 
 const helper = async (req) => {
+  // console.log(req.response.body);
   const {
     specId, apiId, specCheck, specTime, specCode, network,
   } = req;

@@ -115,11 +115,11 @@ const login = async (req, res) => {
   const hashToken = await hashData(token); // Fix check token valid and update token in db
   const hashPW = await hashData(password);
   if (result.length == 0) {
-    res.status(400).send({ error: 'Email does not exist.' });
+    res.status(400).send({ error: 'Login Failed.' }); // Email does not exist.
   } else if (result[0].status != 1) {
-    res.status(400).send({ error: 'Account is inactive.' });
+    res.status(400).send({ error: 'Login Failed.' }); // Account is inactive.
   } else if (hashPW != result[0].password) {
-    res.status(400).send({ error: 'Incorrect password.' });
+    res.status(400).send({ error: 'Login Failed.' }); // Incorrect password.
   } else {
     res.send({
       id: result[0].id,
