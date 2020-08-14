@@ -66,12 +66,10 @@ Monitor API and Generate Reports
 ![](https://i.imgur.com/1H1G4jA.gif)
 
 * Allow user check variable scenarios by creating customized test cases
-![](https://i.imgur.com/n0CjSGC.png)
-
-![](https://i.imgur.com/kSFFWZY.png)
+![](https://i.imgur.com/n0CjSGC.png)![](https://i.imgur.com/kSFFWZY.png)
 
 * Compare response JSON content and data type to criteria automatically
-![](https://i.imgur.com/kfq9izQ.gif)
+![](https://i.imgur.com/ONzAhEk.gif)![](https://i.imgur.com/1ohKHOU.gif）
 
 * Monitor API stability by running multiple test cases at the specific time everyday
 ![](https://i.imgur.com/fRjXVei.png)
