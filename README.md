@@ -69,7 +69,8 @@ Monitor API and Generate Reports
 ![](https://i.imgur.com/n0CjSGC.png)![](https://i.imgur.com/kSFFWZY.png)
 
 * Compare response JSON content and data type to criteria automatically
-![](https://i.imgur.com/ONzAhEk.gif)![](https://i.imgur.com/1ohKHOU.gif）
+![](https://i.imgur.com/dI13lFg.gif)
+![](https://i.imgur.com/arNJKXV.gif）
 
 * Monitor API stability by running multiple test cases at the specific time everyday
 ![](https://i.imgur.com/fRjXVei.png)
