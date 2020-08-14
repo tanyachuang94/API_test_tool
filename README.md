@@ -1,5 +1,5 @@
 # API_test_tool
-Monitoring API and Generate Reports
+Monitor API and Generate Reports
 > Website Link :https://api_test.tanyachuang.site
 
 ## Table of content
@@ -64,17 +64,24 @@ Monitoring API and Generate Reports
 ## Features
 * Send request and get response data, status code, response time, network traffic in real time
 ![](https://i.imgur.com/1H1G4jA.gif)
+
 * Allow user check variable scenarios by creating customized test cases
 ![](https://i.imgur.com/n0CjSGC.png)
+
 ![](https://i.imgur.com/kSFFWZY.png)
+
 * Compare response JSON content and data type to criteria automatically
 ![](https://i.imgur.com/kfq9izQ.gif)
+
 * Monitor API stability by running multiple test cases at the specific time everyday
 ![](https://i.imgur.com/fRjXVei.png)
+
 * Generate report sorted by test case name, test results or test time and highlight fail test results
 ![](https://i.imgur.com/9BY56Kz.png)
+
 * Save every test record and display text formatting test results in detail page immediately
 ![](https://i.imgur.com/yztDKov.png)
+
 * Confirm a user’s signup email address by Nodemailer
 ## Contact
 
