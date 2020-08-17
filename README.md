@@ -7,9 +7,7 @@ Monitor API and Generate Reports
 * [Structure](#structure)
 * [Database](#database)
 * [Features](#features)
-* [Flow](#flow)
-* [Demo](#Demo)
-* [Contact](#Contact)
+* [Unit Test](#Unit_Test)
 
 ## Technique
 ### Backend
@@ -58,8 +56,12 @@ Monitor API and Generate Reports
 ## Structure
 ![](https://s3-ap-northeast-1.amazonaws.com/apitest.tanyachuang.site/imgs/structure.png)
 
+---
+
 ## Database
 ![](https://s3-ap-northeast-1.amazonaws.com/apitest.tanyachuang.site/imgs/db.png)
+
+---
 
 ## Features
 * Send request and get response data, status code, response time, network traffic in real time
@@ -70,7 +72,7 @@ Monitor API and Generate Reports
 
 * Compare response JSON content and data type to criteria automatically
 ![](https://i.imgur.com/dI13lFg.gif)
-![](https://i.imgur.com/arNJKXV.gif)
+![](https://i.imgur.com/UU2M8PM.gifv)
 
 * Monitor API stability by running multiple test cases at the specific time everyday
 ![](https://i.imgur.com/fRjXVei.png)
@@ -82,5 +84,15 @@ Monitor API and Generate Reports
 ![](https://i.imgur.com/yztDKov.png)
 
 * Confirm a user’s signup email address by Nodemailer
-## Contact
+
+---
+
+## Unit_Test
+
+* Test "sortby test time" fail when query as spec name
+![](https://i.imgur.com/OndnZLq.png)
+![](https://i.imgur.com/jWsH7m0.png)
+![](https://i.imgur.com/f5vuj1K.png)
+![](https://i.imgur.com/ThsTlSp.png)
+
 
